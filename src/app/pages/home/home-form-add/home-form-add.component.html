@@ -1,11 +1,11 @@
-<br/>
-<mat-card style="padding: 0!important" class="mat-elevation-z4">
+<br />
+<mat-card style="padding: 0!important; overflow: auto" class="mat-elevation-z4">
   <div class="mat-card-box">
     <mat-card-title>Add your terms</mat-card-title>
   </div>
   <mat-divider></mat-divider>
 
-  <br/>
+  <br />
   <form [formGroup]="form" class="full-width">
     <mat-form-field>
       <mat-label>Select category</mat-label>
@@ -21,31 +21,26 @@
       <b>+</b>
     </button>
   </form>
+
+  <mat-divider></mat-divider>
   <div class="external-box">
-    <mat-grid-list cols="5" rowHeight="3:1">
-      <mat-grid-tile colspan="1">
-        <h3>General</h3>
-      </mat-grid-tile>
-      <mat-grid-tile colspan="4" class="align-fix">
-        <div *ngFor="let term of generals">
-          <mat-card class="terms-config">
-            <span>{{ term }}</span>
-            <mat-icon class="terms-config-icon" (click)="removeGeneralTerm(term)">delete</mat-icon>
-          </mat-card>
-        </div>
-      </mat-grid-tile>
-      <mat-divider></mat-divider>
-      <mat-grid-tile colspan="1">
-        <h3>Domain</h3>
-      </mat-grid-tile>
-      <mat-grid-tile colspan="4" class="align-fix">
-        <div *ngFor="let term of domains">
-          <mat-card class="terms-config">
-            <span>{{ term }}</span>
-            <mat-icon class="terms-config-icon" (click)="removeDomainTerm(term)">delete</mat-icon>
-          </mat-card>
-        </div>
-      </mat-grid-tile>
-    </mat-grid-list>
+    <h3>General</h3>
+    <div *ngFor="let term of generals">
+      <mat-card class="terms-config">
+        <span>{{ term }}</span>
+        <mat-icon class="terms-config-icon" (click)="removeGeneralTerm(term)">delete</mat-icon>
+      </mat-card>
+    </div>
+  </div>
+  <br/>
+  <mat-divider></mat-divider>
+  <div class="external-box">
+    <h3>Domain</h3>
+    <div *ngFor="let term of domains">
+      <mat-card class="terms-config">
+        <span>{{ term }}</span>
+        <mat-icon class="terms-config-icon" (click)="removeDomainTerm(term)">delete</mat-icon>
+      </mat-card>
+    </div>
   </div>
 </mat-card>

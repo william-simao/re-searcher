@@ -6,21 +6,15 @@
 
 .full-width {
     width: 100%;
-    padding: 10px;
-}
-
-mat-grid-tile{    
-    background: rgba(0,0,0,.03);
-    border: 1px solid rgba(0,0,0,.12);
-    overflow: overlay;
 }
 
 mat-form-field{
-    margin: 5px;
+    margin: 15px;
 }
 
 .external-box{
     padding: 10px;
+    overflow: auto;
 }
 
 .input-config{
@@ -34,14 +28,14 @@ mat-form-field{
     margin: 5px;
 }
 
-::ng-deep .align-fix .mat-figure{
-    justify-content: initial !important;
-}
-
 .terms-config-icon{
     float: right;
 }
 
 .terms-config-icon:hover{
     cursor: pointer;
+}
+
+h3 {
+    text-align: center;
 }
