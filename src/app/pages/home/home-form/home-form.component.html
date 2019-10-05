@@ -1,0 +1,29 @@
+<br/>
+<br/>
+<div class="border">
+  <mat-horizontal-stepper linear="false" #stepper>
+    <mat-step>
+      <ng-template matStepLabel>Types</ng-template>
+      <app-home-form-types></app-home-form-types>
+    </mat-step>
+    <mat-step [stepControl]="firstFormGroup">
+      <form [formGroup]="firstFormGroup">
+        <ng-template matStepLabel>Terms</ng-template>
+        <app-home-form-add></app-home-form-add>
+        <!-- <div>
+        <button mat-button matStepperNext>Next</button>
+      </div> -->
+      </form>
+    </mat-step>
+    <mat-step [stepControl]="secondFormGroup">
+      <form [formGroup]="secondFormGroup">
+        <ng-template matStepLabel>Logical operators</ng-template>
+        <app-home-form-config></app-home-form-config>
+      </form>
+    </mat-step>
+    <mat-step>
+      <ng-template matStepLabel>Result</ng-template>
+      <app-home-form-result></app-home-form-result>
+    </mat-step>
+  </mat-horizontal-stepper>
+</div>

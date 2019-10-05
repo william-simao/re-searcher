@@ -1,0 +1,40 @@
+<mat-toolbar color="primary" class="top-bar">
+  <mat-toolbar-row>
+    <button mat-button (click)="sidenav.toggle()" class="circle-button">
+      <mat-icon>reorder</mat-icon>
+    </button>
+    <h1 style="padding-left: 10px">
+      <b>Re-searcher</b>
+    </h1>
+    <!-- <div>
+      <button type="button" class="menu-button" mat-button class="circle-button">
+        <mat-icon>apps</mat-icon>
+      </button>
+    </div> -->
+  </mat-toolbar-row>
+  <mat-divider></mat-divider>
+</mat-toolbar>
+<mat-sidenav-container>
+  <mat-sidenav #sidenav mode="side">
+    <mat-list>
+      <a href="{{baseUrl}}home">
+        <mat-list-item>
+          <mat-icon>format_quote</mat-icon>
+          <p class="menu-item">Use</p>
+        </mat-list-item>
+      </a>
+      <a href="{{baseUrl}}about">
+        <mat-list-item>
+          <mat-icon>bubble_chart</mat-icon>
+          <p class="menu-item">About</p>
+        </mat-list-item>
+      </a>
+      <a href="{{baseUrl}}help">
+        <mat-list-item>
+          <mat-icon>help</mat-icon>
+          <p class="menu-item">Help
+        </mat-list-item>
+      </a>
+    </mat-list>
+  </mat-sidenav>
+</mat-sidenav-container>

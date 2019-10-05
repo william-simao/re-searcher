@@ -1,0 +1,32 @@
+<br/>
+<mat-card style="padding: 0!important" class="mat-elevation-z4">
+    <div class="mat-card-box">
+        <mat-card-title>Select the desired search type</mat-card-title>
+    </div>
+    <mat-divider></mat-divider>
+    <mat-card (click)="go(true)" class="internal-card">
+        <mat-card-subtitle><b>Secondary papers</b></mat-card-subtitle>
+        <mat-card-content>
+            <p>
+                The secondary paper description...
+            </p>
+        </mat-card-content>
+    </mat-card>
+    <mat-card (click)="go(false)" class="internal-card">
+        <mat-card-subtitle><b>Primary papers</b></mat-card-subtitle>
+        <mat-card-content>
+            <p>
+                The primary paper description...
+            </p>
+        </mat-card-content>
+    </mat-card>
+    <mat-card (click)="go(false)" class="internal-card">
+        <mat-card-subtitle><b>Others</b></mat-card-subtitle>
+        <mat-card-content>
+            <p>
+                The other paper description...
+            </p>
+        </mat-card-content>
+    </mat-card>
+    <br/>
+</mat-card>

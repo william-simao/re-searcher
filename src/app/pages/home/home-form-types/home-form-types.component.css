@@ -1,0 +1,14 @@
+.mat-card-box {
+    color: rgba(0,0,0,.54);
+    background: rgba(0,0,0,.03);
+    padding: 15px;
+}
+
+.internal-card {
+    margin: 10px;
+}
+
+.internal-card:hover {
+    cursor: pointer;
+    background: rgba(0,0,0,.03);
+}
