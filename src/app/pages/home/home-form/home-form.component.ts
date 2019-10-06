@@ -37,7 +37,6 @@ export class HomeFormComponent implements OnInit {
   }
 
   public updateTerms(general: Array<string>, domain: Array<string>): void {
-    console.log('opa');
     this.generalTerms = general;
     this.domainTerms = domain;
   }

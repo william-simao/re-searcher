@@ -1,9 +1,32 @@
-<br/>
+<br />
 <mat-card style="overflow: auto">
   <mat-card-header>
-    <mat-card-subtitle>This is your base string</mat-card-subtitle>
-    <mat-card-title *ngIf="this.baseString === ''"><i>Your base string is currently empty. Please, add terms to build string!</i></mat-card-title>
-    <mat-card-title>{{ baseString }}</mat-card-title>
-    <button mat-button (click)="copy()" *ngIf="this.baseString !== ''"><mat-icon>content_copy</mat-icon></button>
+    <mat-card-subtitle>This is your base string:</mat-card-subtitle>
+    <mat-card-title *ngIf="this.baseString === ''"><i>Your base string is currently empty. Please, add terms to build
+        string!</i></mat-card-title>
+    <mat-card-title>{{ this.baseString }}</mat-card-title>
+    <button mat-button (click)="copy()" *ngIf="this.baseString !== ''">
+      <mat-icon>content_copy</mat-icon>
+    </button>
   </mat-card-header>
 </mat-card>
+
+<div *ngFor="let term of _form.generalTerms; let i = index">
+  <mat-card class="terms-config">
+    <span>{{ term }}</span>
+  </mat-card>
+  <mat-button-toggle-group #group="matButtonToggleGroup" class="terms-config" *ngIf="isLastGeneralTerm(i)" value="OR">
+    <mat-button-toggle value="AND" (click)="updateGeneralOperator(i, 'AND')">AND</mat-button-toggle>
+    <mat-button-toggle value="OR" (click)="updateGeneralOperator(i, 'OR')">OR</mat-button-toggle>
+  </mat-button-toggle-group>
+</div>
+
+<div *ngFor="let term of _form.domainTerms; let i = index">
+  <mat-card class="terms-config">
+    <span>{{ term }}</span>
+  </mat-card>
+  <mat-button-toggle-group #group="matButtonToggleGroup" class="terms-config" *ngIf="isLastDomainTerm(i)" value="OR">
+    <mat-button-toggle value="AND" (click)="updateDomainOperator(i, 'AND')">AND</mat-button-toggle>
+    <mat-button-toggle value="OR" (click)="updateDomainOperator(i, 'OR')">OR</mat-button-toggle>
+  </mat-button-toggle-group>
+</div>

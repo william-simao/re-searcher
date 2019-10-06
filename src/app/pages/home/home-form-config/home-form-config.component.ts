@@ -10,7 +10,8 @@ import { HomeFormComponent } from '../home-form/home-form.component';
 })
 export class HomeFormConfigComponent implements OnInit {
   baseString: string = '';
-  operators: Array<string> = new Array<string>();
+  domainOperators: Array<string> = new Array<string>();
+  generalOperators: Array<string> = new Array<string>();
 
   private differ: IterableDiffers;
 
@@ -29,17 +30,13 @@ export class HomeFormConfigComponent implements OnInit {
     }
   }
 
-  ngOnInit() {
+  ngOnInit() {    
   }
+  
 
-  public isLastTerm(index: number): boolean {
-    return (index + 1) !== this._form.generalTerms.length;
-  }
-
-  public updateOperator(index: number, operator: string): void {
-    this.operators[index] = operator;
-  }
-
+  /**
+   * Load and config string 
+   */
   public getStringFormatted(): void {
     this.baseString = ``;
     if (this._form.generalTerms.length > 0 && this._form.domainTerms.length > 0)
@@ -50,16 +47,21 @@ export class HomeFormConfigComponent implements OnInit {
 
     else if (this._form.generalTerms.length <= 0 && this._form.domainTerms.length > 0)
       this.baseString = `(${this.getDomainsTerm()})`;
+
+    this.replaceAll();
   }
 
   private getGeneralTerms(): string {
     let string = ``;
     for (let i = 0; i < this._form.generalTerms.length; i++) {
-      let term = this._form.generalTerms[i];
+      let term = this.getTerm(this._form.generalTerms[i]);
+      let operator = this.getOperator(this.generalOperators[i]);
       let isLast = this._form.generalTerms.length === i + 1;
       string += `${term}`;      
-      if (isLast === false)
-        string += ' OR ';
+      if (isLast === false) {
+        string += ` ${operator} `;
+        this.generalOperators[i] = operator;
+      }
     }
     return string;
   }
@@ -67,13 +69,57 @@ export class HomeFormConfigComponent implements OnInit {
   private getDomainsTerm(): string {
     let string = ``;
     for (let i = 0; i < this._form.domainTerms.length; i++) {
-      let term = this._form.domainTerms[i];
+      let term = this.getTerm(this._form.domainTerms[i]);
+      let operator = this.getOperator(this.domainOperators[i]);
       let isLast = this._form.domainTerms.length === i + 1;
       string += `${term}`;      
-      if (isLast === false)
-        string += ' OR ';
+      if (isLast === false) {
+        string += ` ${operator} `;
+        this.domainOperators[i] = operator;
+      }
     }
     return string;
+  }
+  
+  private getOperator(operator): string {
+    if (operator === undefined)
+      return "OR";
+    if (operator.indexOf("AND") == 0)
+      return ") AND (";
+    return operator;
+  }
+
+  private getTerm(term): string {
+    if (term.trim().indexOf(" ") >= 0)
+      return `"${term}"`;
+    return term;    
+  }
+
+  /**
+   * Update operators
+   */
+  
+  public updateGeneralOperator(index: number, operator: string): void {
+    this.generalOperators[index] = operator;
+    this.getStringFormatted();
+    this._form.updateBaseString(this.baseString);
+  }
+
+  public updateDomainOperator(index: number, operator: string): void {
+    this.domainOperators[index] = operator;
+    this.getStringFormatted();
+    this._form.updateBaseString(this.baseString);
+  }
+
+  /**
+   * Util methods
+   */
+  public isLastGeneralTerm(index: number): boolean {
+    return (index + 1) !== this._form.generalTerms.length;
+  }
+
+  public isLastDomainTerm(index: number): boolean {
+    return (index + 1) !== this._form.domainTerms.length;
   }
 
   public copy(): void {
@@ -91,4 +137,9 @@ export class HomeFormConfigComponent implements OnInit {
       duration: 2000,
     }); 
   }
+
+  private replaceAll() {
+    this.baseString = this.baseString.split(" )").join(")");
+    this.baseString = this.baseString.split("( ").join("(");
+};
 }
