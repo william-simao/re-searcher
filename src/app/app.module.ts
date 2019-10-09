@@ -55,6 +55,7 @@ import { AboutPageComponent } from './pages/about/about-page/about-page.componen
 import { HelpPageComponent } from './pages/help/help-page/help-page.component';
 import { routes } from '../app/app-routing/app-routing.module';
 import { HomeFormTypesComponent } from './pages/home/home-form-types/home-form-types.component';
+import { HttpClientModule } from '@angular/common/http';
 
 @NgModule({
   declarations: [
@@ -71,6 +72,7 @@ import { HomeFormTypesComponent } from './pages/home/home-form-types/home-form-t
     HomeFormTypesComponent
   ],
   imports: [
+    HttpClientModule,
     BrowserModule,
     BrowserAnimationsModule,
     FormsModule,

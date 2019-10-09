@@ -1,6 +1,7 @@
 import { Component, OnInit, IterableDiffers } from '@angular/core';
 
 import { HomeFormComponent } from '../home-form/home-form.component';
+import { HttpClient } from '@angular/common/http';
 
 export interface StringBase {
   source: string;
@@ -23,11 +24,16 @@ export class HomeFormResultComponent implements OnInit {
   public ieeeString: string = '';
   public ieee: object = {};
 
-  isTitle = false;
+  isTitle = true;
   isAbstract = false;
   isKeyword = false;
 
+  isIeee = true;
+  isAcm = false;
+  isScienceDirect = false;
+
   constructor(
+    private http: HttpClient,
     private _form: HomeFormComponent,
     private _differs: IterableDiffers
   ) { this.differ = _differs; }
@@ -194,4 +200,12 @@ export class HomeFormResultComponent implements OnInit {
     return ieeeBase;
   }
 
+
+  public searchInSources(): void {
+    if (this.isIeee) {
+      this.formatIeee();
+      if (this.isTitle) {
+      }
+    }
+  }  
 }

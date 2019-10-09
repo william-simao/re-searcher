@@ -6,6 +6,17 @@
   <mat-checkbox [(ngModel)]="isKeyword" (click)="search()">Keywords</mat-checkbox>
 </section>
 
+<h2 class="example-h2">Sources</h2>
+
+<section>
+  <mat-checkbox [(ngModel)]="isIeee" (click)="search()">IEEEXplore</mat-checkbox><br/>
+  <mat-checkbox [(ngModel)]="isAcm" (click)="search()">ACM DL</mat-checkbox><br/>
+  <mat-checkbox [(ngModel)]="isScienceDirect" (click)="search()">Science Direct</mat-checkbox>
+</section>
+
+<button mat-button (click)="searchInSources()">SEARCH</button>
+
+
 <table mat-table [dataSource]="dataSource">
 
   <ng-container matColumnDef="source">
