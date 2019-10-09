@@ -1,7 +1,8 @@
 import { Component, OnInit, IterableDiffers } from '@angular/core';
+import { HttpClient } from '@angular/common/http';
 
 import { HomeFormComponent } from '../home-form/home-form.component';
-import { HttpClient } from '@angular/common/http';
+import { IeeeService } from 'src/libraries/ieee.service';
 
 export interface StringBase {
   source: string;
@@ -35,7 +36,8 @@ export class HomeFormResultComponent implements OnInit {
   constructor(
     private http: HttpClient,
     private _form: HomeFormComponent,
-    private _differs: IterableDiffers
+    private _differs: IterableDiffers,
+    private _ieee: IeeeService
   ) { this.differ = _differs; }
 
   ngOnInit() {
@@ -205,7 +207,43 @@ export class HomeFormResultComponent implements OnInit {
     if (this.isIeee) {
       this.formatIeee();
       if (this.isTitle) {
+        this._ieee.Search(this.dataSource[0].text);
+        //this._sender.sendRequest('https://ieeexplore.ieee.org/search/searchresult.jsp?newsearch=true&queryText=(OER%20OR%20%22open%20educational%20resources%22)%20AND%20(recommendation)');
+        //this.httpCall('GET', 'https://ieeexplore.ieee.org/search/searchresult.jsp?newsearch=true&queryText=(OER%20OR%20%22open%20educational%20resources%22)%20AND%20(recommendation)', null, null);
       }
     }
-  }  
+  }
+
+  private httpCall(method: string, url:string, data:any, callback:(result:any)=>any) {
+    const Http = new XMLHttpRequest();
+		Http.open("GET", `https://cors-anywhere.herokuapp.com/${url}`);
+		Http.send();
+		Http.onreadystatechange = (e) => {
+        var result = Http.responseText;
+        debugger;
+  			if (Http.readyState == 4 && Http.status == 200){
+  				var doc = new DOMParser().parseFromString(Http.responseText, "text/html");
+  			}
+		}
+    /*fetch('https://cors-anywhere.herokuapp.com/'+url, {
+      method: 'GET',
+      headers: {
+        'x-foo': 'bar',
+        'x-bar': 'foo',
+        'x-cors-headers': JSON.stringify({
+          // allows to send forbidden headers
+          // https://developer.mozilla.org/en-US/docs/Glossary/Forbidden_header_name
+          'cookies': 'x=123'
+        }) 
+      }
+    }).then(res => {
+      debugger;
+      // allows to read all headers (even forbidden headers like set-cookies)
+      const headers = JSON.parse(res.headers.get('cors-received-headers'))
+      console.log(headers)
+      return res.json()
+    }).then(console.log)*/
+  }
+  
+
 }
