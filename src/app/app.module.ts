@@ -56,6 +56,7 @@ import { HelpPageComponent } from './pages/help/help-page/help-page.component';
 import { routes } from '../app/app-routing/app-routing.module';
 import { HomeFormTypesComponent } from './pages/home/home-form-types/home-form-types.component';
 import { HttpClientModule } from '@angular/common/http';
+import { PaperService } from 'src/libraries/paper.service';
 
 @NgModule({
   declarations: [
@@ -120,7 +121,8 @@ import { HttpClientModule } from '@angular/common/http';
   ],
   providers: [
     HomeFormComponent,
-    CdkColumnDef
+    CdkColumnDef,
+    PaperService
   ],
   bootstrap: [AppComponent]
 })

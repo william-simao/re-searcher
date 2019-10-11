@@ -16,6 +16,55 @@
 
 <button mat-button (click)="searchInSources()">SEARCH</button>
 
+<table mat-table [dataSource]="dataSource2">
+
+  <ng-container matColumnDef="source">
+    <th mat-header-cell *matHeaderCellDef>
+      <h3>Source</h3>
+    </th>
+    <td mat-cell *matCellDef="let element; let i = index">
+      <b>{{element.source}}</b>
+    </td>
+  </ng-container>
+
+  <ng-container matColumnDef="type">
+    <th mat-header-cell *matHeaderCellDef>
+      <h3>type</h3>
+    </th>
+    <td mat-cell *matCellDef="let element; let i = index">
+      <b>{{element.type}}</b>
+    </td>
+  </ng-container>
+
+  <ng-container matColumnDef="title">
+    <th mat-header-cell *matHeaderCellDef>
+      <h3>title</h3>
+    </th>
+    <td mat-cell *matCellDef="let element; let i = index">
+      <b>{{element.title}}</b>
+    </td>
+  </ng-container>
+
+  <ng-container matColumnDef="DOI">
+    <th mat-header-cell *matHeaderCellDef>
+      <h3>DOI</h3>
+    </th>
+    <td mat-cell *matCellDef="let element; let i = index">
+      <b>{{element.DOI}}</b>
+    </td>
+  </ng-container>
+
+  <ng-container matColumnDef="year">
+    <th mat-header-cell *matHeaderCellDef>
+      <h3>year</h3>
+    </th>
+    <td mat-cell *matCellDef="let element; let i = index">
+      <b>{{element.year}}</b>
+    </td>
+  </ng-container>
+
+  <tr mat-header-row *matHeaderRowDef="displayedColumns2"></tr>
+  <tr mat-row *matRowDef="let row; columns: displayedColumns2;"></tr>
 
 <table mat-table [dataSource]="dataSource">
 

@@ -13,6 +13,7 @@ export class IeeeService {
 
   private setTitle = function(result) {
     this.DOMTitle = result;
+    debugger;
     console.log(this.DOMTitle);
   }
 
