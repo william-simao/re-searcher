@@ -1,3 +1,20 @@
 table {
     width: 100%;
 }
+
+.searchIn {
+    width: 45%;
+    float: left;
+}
+
+.source {
+    width: 45%;
+    float: left;
+}
+
+.clearfix {
+    display: block;
+    content: "";
+    clear: both;
+  
+}

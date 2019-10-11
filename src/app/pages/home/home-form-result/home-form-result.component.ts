@@ -1,10 +1,10 @@
-import { Component, OnInit, IterableDiffers } from '@angular/core';
-import { HttpClient } from '@angular/common/http';
+import { Component, OnInit, IterableDiffers, ViewChild } from '@angular/core';
 
 import { HomeFormComponent } from '../home-form/home-form.component';
 import { IeeeService } from 'src/libraries/ieee.service';
 import { AcmdlService } from 'src/libraries/acmdl.service';
 import { PapersService } from 'src/common/papers.service';
+import { MatPaginator } from '@angular/material';
 
 export interface StringBase {
   source: string;
@@ -21,6 +21,7 @@ export interface StringBase {
 export class HomeFormResultComponent implements OnInit {
   displayedColumns: string[] = ['source', 'type', 'text', 'url'];
   displayedColumns2: string[] = ['source', 'type', 'title', 'DOI', 'year'];
+  @ViewChild(MatPaginator, {static: true}) paginator: MatPaginator;
   public dataSource;
   public dataSource2;
   private differ: IterableDiffers;
@@ -36,6 +37,7 @@ export class HomeFormResultComponent implements OnInit {
   isIeee = true;
   isAcm = false;
   isScienceDirect = false;
+  
 
   constructor(
     private _form: HomeFormComponent,
@@ -46,6 +48,7 @@ export class HomeFormResultComponent implements OnInit {
   ) { this.differ = _differs; }
 
   ngOnInit() {
+    this.dataSource2 = [];
   }
 
   public search(): void {
@@ -78,8 +81,22 @@ export class HomeFormResultComponent implements OnInit {
 
     const changes2 = this.differ.find(this._papers.papers);
     if (changes2){
-      console.log(`${new Date()}: ${this._papers.papers.length}`);
-      this.dataSource2 = this._papers.papers;
+      this.convertToData();
+    }
+  }
+
+  private convertToData(): void {
+    this.dataSource2 = [];
+    this.dataSource2.paginator = this.paginator;
+    for (let i = 0; i < this._papers.papers.length; i++) {
+      var paperAux = this._papers.papers[i];
+      this.dataSource2[i] = {
+        "source": paperAux.source,
+        "type": paperAux.type,
+        "title": paperAux.title,
+        "DOI": paperAux.DOI,
+        "year": paperAux.year
+      }      
     }
   }
 
@@ -214,6 +231,8 @@ export class HomeFormResultComponent implements OnInit {
 
 
   public searchInSources(): void {
+    this.dataSource2 = [];
+    this._papers.papers = [];
     if (this.isIeee) {
       this.formatIeee();
       if (this.isTitle) {

@@ -1,6 +1,6 @@
 import { Injectable } from '@angular/core';
 
-import { PaperService, Paper } from 'src/libraries/paper.service';
+import { Paper } from 'src/libraries/paper.service';
 
 @Injectable({
   providedIn: 'root'
