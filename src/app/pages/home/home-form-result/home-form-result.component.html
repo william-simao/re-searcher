@@ -19,7 +19,7 @@
 <br/>
 <br/>
 <div class="mat-elevation-z8">
-  <table mat-table [dataSource]="dataSource2">
+  <table mat-table [dataSource]="dataSoucePapers">
 
     <ng-container matColumnDef="source">
       <th mat-header-cell *matHeaderCellDef>
@@ -66,8 +66,8 @@
       </td>
     </ng-container>
 
-    <tr mat-header-row *matHeaderRowDef="displayedColumns2"></tr>
-    <tr mat-row *matRowDef="let row; columns: displayedColumns2;"></tr>
+    <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>
+    <tr mat-row *matRowDef="let row; columns: displayedColumns;"></tr>
 
   </table>
   <mat-paginator #scheduledOrdersPaginator  [pageSizeOptions]="[50, 100]"></mat-paginator>

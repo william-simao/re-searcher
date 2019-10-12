@@ -19,11 +19,10 @@ export interface StringBase {
   styleUrls: ['./home-form-result.component.css']
 })
 export class HomeFormResultComponent implements OnInit {
-  displayedColumns: string[] = ['source', 'type', 'text', 'url'];
-  displayedColumns2: string[] = ['source', 'type', 'title', 'DOI', 'year'];
+  displayedColumns: string[] = ['source', 'type', 'title', 'DOI', 'year'];
   @ViewChild(MatPaginator, {static: true}) paginator: MatPaginator;
   public dataSource;
-  public dataSource2;
+  public dataSoucePapers;
   private differ: IterableDiffers;
 
   public baseString: string = '';
@@ -48,7 +47,7 @@ export class HomeFormResultComponent implements OnInit {
   ) { this.differ = _differs; }
 
   ngOnInit() {
-    this.dataSource2 = [];
+    this.dataSoucePapers = [];
   }
 
   public search(): void {
@@ -75,7 +74,6 @@ export class HomeFormResultComponent implements OnInit {
     if (changes) {
       this.baseString = this._form.baseString;
       this.formatIeee();
-      this.formatAcm();
       this.formatScienceDirect();
     }
 
@@ -86,11 +84,11 @@ export class HomeFormResultComponent implements OnInit {
   }
 
   private convertToData(): void {
-    this.dataSource2 = [];
-    this.dataSource2.paginator = this.paginator;
+    this.dataSoucePapers = [];
+    this.dataSoucePapers.paginator = this.paginator;
     for (let i = 0; i < this._papers.papers.length; i++) {
       var paperAux = this._papers.papers[i];
-      this.dataSource2[i] = {
+      this.dataSoucePapers[i] = {
         "source": paperAux.source,
         "type": paperAux.type,
         "title": paperAux.title,
@@ -129,46 +127,6 @@ export class HomeFormResultComponent implements OnInit {
     };
   }
 
-  /**
-   * ACM DL
-   */
-  private formatAcm(): void {
-    let acmBase = this.removeBaseParenthesis();
-    acmBase = this.addSignalAcm(acmBase);
-    this.addKeysAcm(acmBase);
-  }
-
-  private addSignalAcm(acmBase: string): string {
-    acmBase = this.replaceAll(acmBase, ' OR ', ' OR +');
-    acmBase = this.replaceAll(acmBase, ' AND ', ' AND +');
-    return `(+${acmBase})`;
-  }
-
-  private addKeysAcm(acmBase: string): void {
-    let title = `acmdlTitle:(${acmBase})`;
-    let abstract = `recordAbstract:(${acmBase})`;
-    let keyword = `keywords.author.keyword:(${acmBase})`;
-    let url = `https://dl.acm.org/results.cfm?query=#query#&within=owners.owner=HOSTED&filtered=&dte=&bfr=`
-    
-    this.dataSource[3] = {
-      'source': 'ACM DL',
-      'type': 'Title',
-      'text': title,
-      'url': url.replace('#query#', title)
-    };
-    this.dataSource[4] = {
-      'source': 'ACM DL',
-      'type': 'Abstract',
-      'text': abstract,
-      'url': url.replace('#query#', abstract)
-    };
-    this.dataSource[5] = {
-      'source': 'ACM DL',
-      'type': 'Keyword',
-      'text': keyword,
-      'url': url.replace('#query#', keyword)
-    };
-  }
 
   /**
    * IEEEXplore
@@ -231,7 +189,7 @@ export class HomeFormResultComponent implements OnInit {
 
 
   public searchInSources(): void {
-    this.dataSource2 = [];
+    this.dataSoucePapers = [];
     this._papers.papers = [];
     if (this.isIeee) {
       this.formatIeee();
@@ -242,17 +200,17 @@ export class HomeFormResultComponent implements OnInit {
       }
     }
 
-    if (this.isAcm) {
-      this.formatAcm();
-      if (this.isTitle) {
-        this._acmdl.Search(this.dataSource[3].text);
-      }
-    }
-  }
-
-  private setAcmTitle = function(result) {
-    console.log(result);
+    if (this.isAcm)
+      this.searchInACM();    
   }
   
+  private searchInACM(): void {
+    if (this.isTitle)
+      this._acmdl.Search(this._form.baseString, "title");
+    if (this.isTitle)
+      this._acmdl.Search(this._form.baseString, "abstract");
+    if (this.isTitle)
+      this._acmdl.Search(this._form.baseString, "keyword");
+  }
 
 }
