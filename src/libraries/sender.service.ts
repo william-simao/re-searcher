@@ -26,6 +26,9 @@ export class SenderService {
     if (source === "Springer")
       this.paper.SpringerReader(result);
 
+    if (source == "Science Direct")
+      this.paper.ScienceDirectReader(result);
+
     if (source === "ACM DL")
       this.paper.ACMReader(result);
   }

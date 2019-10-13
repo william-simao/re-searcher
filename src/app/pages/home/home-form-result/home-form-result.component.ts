@@ -6,6 +6,7 @@ import { AcmdlService } from 'src/libraries/acmdl.service';
 import { PapersService } from 'src/common/papers.service';
 import { MatPaginator } from '@angular/material';
 import { SpringerService } from 'src/libraries/springer.service';
+import { ScienceDirectService } from 'src/libraries/science-direct.service';
 
 export interface StringBase {
   source: string;
@@ -45,6 +46,7 @@ export class HomeFormResultComponent implements OnInit {
     private _differs: IterableDiffers,
     private _ieee: IeeeService,
     private _springer: SpringerService,
+    private _scienceDirect: ScienceDirectService,
     private _acmdl: AcmdlService,
     public _papers: PapersService
   ) { this.differ = _differs; }
@@ -196,15 +198,23 @@ export class HomeFormResultComponent implements OnInit {
     this.dataSourcePapers = [];
     this._papers.papers = [];
     if (this.isSpringer)
-      this.searchInSprint();
+      this.searchInSpringer();
+    
+    if (this.isScienceDirect)
+      this.searchInScienceDirect();
+    
     if (this.isAcm)
       this.searchInACM();    
   }
 
-  private searchInSprint(): void {
+  private searchInSpringer(): void {
     this._springer.Search(this.baseString);
   }
   
+  private searchInScienceDirect(): void {
+    this._scienceDirect.Search(this.baseString);
+  }
+
   private searchInACM(): void {
     if (this.isTitle)
       this._acmdl.Search(this._form.baseString, "title");
