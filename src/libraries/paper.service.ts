@@ -13,10 +13,22 @@ export class Paper {
 
   constructor(source, type, title, doi, year){
     this.source = source;
-    this.type = type.replace(`"`, "");
-    this.title = title.replace(`"`, "");
+    this.type = type ? type.replace(`"`, "") : "";
+    this.title = title ? title.replace(`"`, "") : "";
     this.DOI = doi;
     this.year = year;
+  }
+}
+
+export class Result {
+  source: string;
+  type: string;
+  total: number;
+
+  constructor(source, type, total) {
+    this.source = source;
+    this.type = type;
+    this.total = total;
   }
 }
 

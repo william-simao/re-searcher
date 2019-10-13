@@ -21,10 +21,12 @@ export interface StringBase {
   styleUrls: ['./home-form-result.component.css']
 })
 export class HomeFormResultComponent implements OnInit {
-  displayedColumns: string[] = ['source', 'type', 'title', 'DOI', 'year'];
-  @ViewChild(MatPaginator, {static: false}) paginator: MatPaginator;
+  displayedColumns: string[] = ['source', 'type', 'title', 'DOI', 'year'];  
+  displayedColumnsResult: string[] = ['source', 'type', 'total'];
+
   public dataSource;
   public dataSourcePapers;
+  public dataSourceResult;
   private differ: IterableDiffers;
 
   public baseString: string = '';
@@ -79,7 +81,6 @@ export class HomeFormResultComponent implements OnInit {
     if (changes) {
       this.baseString = this._form.baseString;
       this.formatIeee();
-      this.formatScienceDirect();
     }
 
     const changes2 = this.differ.find(this._papers.papers);
@@ -89,8 +90,18 @@ export class HomeFormResultComponent implements OnInit {
   }
 
   private convertToData(): void {
+    this.dataSourceResult = [];
+    for (let i = 0; i < this._papers.result.length; i++) {
+      var result = this._papers.result[i];
+      this.dataSourceResult[i] = {
+        "source": result.source,
+        "type": result.type,
+        "total": result.total,
+      }
+    }
+    
+
     this.dataSourcePapers = [];
-    this.dataSourcePapers.paginator = this.paginator;
     for (let i = 0; i < this._papers.papers.length; i++) {
       var paperAux = this._papers.papers[i];
       this.dataSourcePapers[i] = {
@@ -101,7 +112,6 @@ export class HomeFormResultComponent implements OnInit {
         "year": paperAux.year
       }      
     }
-    this.dataSourcePapers.paginator = this.paginator;
   }
 
   private replaceAll(text: string, oldChar: string, newChar: string): string {
@@ -116,21 +126,6 @@ export class HomeFormResultComponent implements OnInit {
     let base = this.replaceAll(this.baseString, '(', '');
     base = this.replaceAll(base, ')', '');
     return base;
-  }
-
-  /**
-   * SCIENCE DIRECT
-   */
-  private formatScienceDirect(): void {
-    let scienceDirectBase = `title-abs-key(${this.baseString})`;
-    let url = `https://www.sciencedirect.com/search?qs=#query#`
-    
-    this.dataSource[6] = {
-      'source': 'Science Direct',
-      'type': 'Title, Abstract, and Keywords',
-      'text': scienceDirectBase,
-      'url': url.replace('#query#', scienceDirectBase)
-    };
   }
 
 
@@ -197,6 +192,7 @@ export class HomeFormResultComponent implements OnInit {
   public searchInSources(): void {
     this.dataSourcePapers = [];
     this._papers.papers = [];
+    this._papers.result = [];
     if (this.isSpringer)
       this.searchInSpringer();
     
@@ -218,9 +214,9 @@ export class HomeFormResultComponent implements OnInit {
   private searchInACM(): void {
     if (this.isTitle)
       this._acmdl.Search(this._form.baseString, "title");
-    if (this.isTitle)
+    if (this.isAbstract)
       this._acmdl.Search(this._form.baseString, "abstract");
-    if (this.isTitle)
+    if (this.isKeyword)
       this._acmdl.Search(this._form.baseString, "keyword");
   }
 

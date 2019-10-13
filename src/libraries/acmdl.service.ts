@@ -20,11 +20,11 @@ export class AcmdlService {
   public Search(baseString: string, type: string): void {
     this.formatAcm(baseString);
     if (type === "title")
-      this._sender.sendRequest(`https://dl.acm.org/exportformats_search.cfm?query=${this.title}&filtered=&within=owners%2Eowner%3DHOSTED&dte=&bfr=&srt=%5Fscore&expformat=csv`, "ACM DL");
+      this._sender.sendRequest(`https://dl.acm.org/exportformats_search.cfm?query=${this.title}&filtered=&within=owners%2Eowner%3DHOSTED&dte=&bfr=&srt=%5Fscore&expformat=csv`, "ACM DL Title");
     if (type === "abstract")
-      this._sender.sendRequest(`https://dl.acm.org/exportformats_search.cfm?query=${this.abstract}&filtered=&within=owners%2Eowner%3DHOSTED&dte=&bfr=&srt=%5Fscore&expformat=csv`, "ACM DL");
-      if (type === "keyword")
-        this._sender.sendRequest(`https://dl.acm.org/exportformats_search.cfm?query=${this.keyword}&filtered=&within=owners%2Eowner%3DHOSTED&dte=&bfr=&srt=%5Fscore&expformat=csv`, "ACM DL");
+      this._sender.sendRequest(`https://dl.acm.org/exportformats_search.cfm?query=${this.abstract}&filtered=&within=owners%2Eowner%3DHOSTED&dte=&bfr=&srt=%5Fscore&expformat=csv`, "ACM DL Abstract");
+    if (type === "keyword")
+      this._sender.sendRequest(`https://dl.acm.org/exportformats_search.cfm?query=${this.keyword}&filtered=&within=owners%2Eowner%3DHOSTED&dte=&bfr=&srt=%5Fscore&expformat=csv`, "ACM DL Keyword");
   }
 
   private formatAcm(baseString: string): void {

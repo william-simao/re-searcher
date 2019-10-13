@@ -29,7 +29,7 @@ export class SenderService {
     if (source == "Science Direct")
       this.paper.ScienceDirectReader(result);
 
-    if (source === "ACM DL")
-      this.paper.ACMReader(result);
+    if (source.startsWith("ACM DL"))
+      this.paper.ACMReader(result, source);
   }
 }
