@@ -23,13 +23,10 @@ export class SenderService {
   }
 
   private reader(result, source): void {
-    var titleResult = result.split("\n");
-    titleResult.forEach(titleRow => {
-      var title = titleRow.split(`","`);
-      var paper = new Paper(source, title[0], title[6], title[11], title[18]);
-      if (paper != null && paper != undefined){
-        this.paper.update(paper);
-      }
-    });
+    if (source === "Springer")
+      this.paper.SpringerReader(result);
+
+    if (source === "ACM DL")
+      this.paper.ACMReader(result);
   }
 }

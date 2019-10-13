@@ -5,6 +5,7 @@ import { IeeeService } from 'src/libraries/ieee.service';
 import { AcmdlService } from 'src/libraries/acmdl.service';
 import { PapersService } from 'src/common/papers.service';
 import { MatPaginator } from '@angular/material';
+import { SpringerService } from 'src/libraries/springer.service';
 
 export interface StringBase {
   source: string;
@@ -20,9 +21,9 @@ export interface StringBase {
 })
 export class HomeFormResultComponent implements OnInit {
   displayedColumns: string[] = ['source', 'type', 'title', 'DOI', 'year'];
-  @ViewChild(MatPaginator, {static: true}) paginator: MatPaginator;
+  @ViewChild(MatPaginator, {static: false}) paginator: MatPaginator;
   public dataSource;
-  public dataSoucePapers;
+  public dataSourcePapers;
   private differ: IterableDiffers;
 
   public baseString: string = '';
@@ -36,18 +37,20 @@ export class HomeFormResultComponent implements OnInit {
   isIeee = true;
   isAcm = false;
   isScienceDirect = false;
+  isSpringer = false;
   
 
   constructor(
     private _form: HomeFormComponent,
     private _differs: IterableDiffers,
     private _ieee: IeeeService,
+    private _springer: SpringerService,
     private _acmdl: AcmdlService,
     public _papers: PapersService
   ) { this.differ = _differs; }
 
   ngOnInit() {
-    this.dataSoucePapers = [];
+    this.dataSourcePapers = [];
   }
 
   public search(): void {
@@ -84,11 +87,11 @@ export class HomeFormResultComponent implements OnInit {
   }
 
   private convertToData(): void {
-    this.dataSoucePapers = [];
-    this.dataSoucePapers.paginator = this.paginator;
+    this.dataSourcePapers = [];
+    this.dataSourcePapers.paginator = this.paginator;
     for (let i = 0; i < this._papers.papers.length; i++) {
       var paperAux = this._papers.papers[i];
-      this.dataSoucePapers[i] = {
+      this.dataSourcePapers[i] = {
         "source": paperAux.source,
         "type": paperAux.type,
         "title": paperAux.title,
@@ -96,6 +99,7 @@ export class HomeFormResultComponent implements OnInit {
         "year": paperAux.year
       }      
     }
+    this.dataSourcePapers.paginator = this.paginator;
   }
 
   private replaceAll(text: string, oldChar: string, newChar: string): string {
@@ -189,19 +193,16 @@ export class HomeFormResultComponent implements OnInit {
 
 
   public searchInSources(): void {
-    this.dataSoucePapers = [];
+    this.dataSourcePapers = [];
     this._papers.papers = [];
-    if (this.isIeee) {
-      this.formatIeee();
-      if (this.isTitle) {
-        //this._ieee.Search(this.dataSource[0].text);
-        //this._sender.sendRequest('https://ieeexplore.ieee.org/search/searchresult.jsp?newsearch=true&queryText=(OER%20OR%20%22open%20educational%20resources%22)%20AND%20(recommendation)');
-        //this.httpCall('GET', 'https://ieeexplore.ieee.org/search/searchresult.jsp?newsearch=true&queryText=(OER%20OR%20%22open%20educational%20resources%22)%20AND%20(recommendation)', null, null);
-      }
-    }
-
+    if (this.isSpringer)
+      this.searchInSprint();
     if (this.isAcm)
       this.searchInACM();    
+  }
+
+  private searchInSprint(): void {
+    this._springer.Search(this.baseString);
   }
   
   private searchInACM(): void {

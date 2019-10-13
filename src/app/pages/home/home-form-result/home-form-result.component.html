@@ -7,9 +7,10 @@
   </div>
   <div class="source">
     <h2 class="example-h2">Sources</h2>
-    <mat-checkbox [(ngModel)]="isIeee" (click)="search()">IEEEXplore</mat-checkbox><br />
+    <!-- <mat-checkbox [(ngModel)]="isIeee" (click)="search()">IEEEXplore</mat-checkbox><br /> -->
+    <mat-checkbox [(ngModel)]="isSpringer" (click)="search()">Springer</mat-checkbox><br />
     <mat-checkbox [(ngModel)]="isAcm" (click)="search()">ACM DL</mat-checkbox><br />
-    <mat-checkbox [(ngModel)]="isScienceDirect" (click)="search()">Science Direct</mat-checkbox>
+    <!-- <mat-checkbox [(ngModel)]="isScienceDirect" (click)="search()">Science Direct</mat-checkbox> -->
   </div>
 </section>
 <div class="clearfix"></div>
@@ -19,7 +20,7 @@
 <br/>
 <br/>
 <div class="mat-elevation-z8">
-  <table mat-table [dataSource]="dataSoucePapers">
+  <table mat-table [dataSource]="dataSourcePapers">
 
     <ng-container matColumnDef="source">
       <th mat-header-cell *matHeaderCellDef>

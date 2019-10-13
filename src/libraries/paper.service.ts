@@ -13,8 +13,8 @@ export class Paper {
 
   constructor(source, type, title, doi, year){
     this.source = source;
-    this.type = type;
-    this.title = title;
+    this.type = type.replace(`"`, "");
+    this.title = title.replace(`"`, "");
     this.DOI = doi;
     this.year = year;
   }
