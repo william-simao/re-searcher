@@ -7,6 +7,7 @@ import { PapersService } from 'src/common/papers.service';
 import { MatPaginator } from '@angular/material';
 import { SpringerService } from 'src/libraries/springer.service';
 import { ScienceDirectService } from 'src/libraries/science-direct.service';
+import { WileyService } from 'src/libraries/wiley.service';
 
 export interface StringBase {
   source: string;
@@ -41,6 +42,7 @@ export class HomeFormResultComponent implements OnInit {
   isAcm = false;
   isScienceDirect = false;
   isSpringer = false;
+  isWiley = false;
   
 
   constructor(
@@ -50,6 +52,7 @@ export class HomeFormResultComponent implements OnInit {
     private _springer: SpringerService,
     private _scienceDirect: ScienceDirectService,
     private _acmdl: AcmdlService,
+    private _wiley: WileyService,
     public _papers: PapersService
   ) { this.differ = _differs; }
 
@@ -201,6 +204,9 @@ export class HomeFormResultComponent implements OnInit {
     
     if (this.isAcm)
       this.searchInACM();    
+
+    if (this.isWiley)
+      this.searchInWiley();
   }
 
   private searchInSpringer(): void {
@@ -213,11 +219,16 @@ export class HomeFormResultComponent implements OnInit {
 
   private searchInACM(): void {
     if (this.isTitle)
-      this._acmdl.Search(this._form.baseString, "title");
+      this._acmdl.GetResults(this._form.baseString, "title");
     if (this.isAbstract)
-      this._acmdl.Search(this._form.baseString, "abstract");
+      this._acmdl.GetResults(this._form.baseString, "abstract");
     if (this.isKeyword)
-      this._acmdl.Search(this._form.baseString, "keyword");
+      this._acmdl.GetResults(this._form.baseString, "keyword");
+  }
+
+  private searchInWiley(): void {
+    if (this.isTitle)
+      this._wiley.GetTitleResults(this._form.baseString);
   }
 
 }

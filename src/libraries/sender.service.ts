@@ -9,6 +9,21 @@ export class SenderService {
 
   public papers: Paper[] = [];
   constructor(public paper: PapersService) { }
+  public getResults(url: string, source: any): any {
+    const Http = new XMLHttpRequest();
+		Http.open("GET", `https://cors-anywhere.herokuapp.com/${url}`);
+		Http.send();
+		Http.onreadystatechange = (e) => {
+      if (Http.readyState == 4 && Http.status == 200) {
+        var result = Http.responseText;
+        this.readerResults(result, source);
+      }
+		}
+  }
+
+  private readerResults(result, source): void {
+    this.paper.ACMResult(result, source);
+  }
 
   public sendRequest(url: string, source: any): any {
     const Http = new XMLHttpRequest();

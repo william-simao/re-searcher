@@ -63,4 +63,13 @@ export class PapersService {
     }*/
     this.result.push(new Result("ACM DL", type.split(" ")[2], paperList.length - 1));
   }
+
+  public ACMResult(result, type): void {
+    var doc = this.convertResultToDOM(result);
+    this.result.push(new Result("ACM DL", type.split(" ")[2], doc.getElementById("searchtots").innerText.split(" ")[0]));
+  }
+
+  private convertResultToDOM(result): any {
+    return new DOMParser().parseFromString(result, "text/html");
+  }
 }

@@ -17,6 +17,16 @@ export class AcmdlService {
     private _util: UtilService
   ) { }
 
+  public GetResults(baseString: string, type: string): void {
+    this.formatAcm(baseString);
+    if (type === "title")
+      this._sender.getResults(`https://dl.acm.org/results.cfm?query=${this.title}`, "ACM DL Title");
+    if (type === "abstract")
+      this._sender.getResults(`https://dl.acm.org/results.cfm?query=${this.abstract}&Go.x=0&Go.y=0`, "ACM DL Abstract");
+    if (type === "keyword")
+      this._sender.getResults(`https://dl.acm.org/results.cfm?query=${this.keyword}&Go.x=0&Go.y=0`, "ACM DL Keyword");
+  }
+
   public Search(baseString: string, type: string): void {
     this.formatAcm(baseString);
     if (type === "title")
