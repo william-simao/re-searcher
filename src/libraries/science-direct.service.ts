@@ -24,6 +24,11 @@ export class ScienceDirectService {
     this._sender.sendRequest(url, "Science Direct");
   }
 
+  public getResults(baseString: string): void {
+    let url = `https://www.sciencedirect.com/search/advanced?qs=${baseString}`;
+    this._sender.getResults(url, "Science Direct")
+  }
+
   private sleep(seconds){
     var waitUntil = new Date().getTime() + seconds*500;
     while(new Date().getTime() < waitUntil) true;

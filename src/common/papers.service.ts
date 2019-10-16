@@ -69,6 +69,16 @@ export class PapersService {
     this.result.push(new Result("ACM DL", type.split(" ")[2], doc.getElementById("searchtots").innerText.split(" ")[0]));
   }
 
+  public SpringerResult(result): void {
+    var doc = this.convertResultToDOM(result);
+    this.result.push(new Result("Springer Link", "Title, Abstract, and Keywords", doc.getElementById("number-of-search-results-and-search-terms").innerText.split(" ")[0]));
+  }
+
+  public ScienceDirectResult(result): void {
+    var doc = this.convertResultToDOM(result);
+    this.result.push(new Result("Science Direct", "Title, Abstract, and Keywords", doc.getElementsByClassName("search-body-results-text")[0].innerText.split(" ")[0]));
+  }
+
   private convertResultToDOM(result): any {
     return new DOMParser().parseFromString(result, "text/html");
   }

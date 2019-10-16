@@ -210,20 +210,20 @@ export class HomeFormResultComponent implements OnInit {
   }
 
   private searchInSpringer(): void {
-    this._springer.Search(this.baseString);
+    this._springer.getResults(this.baseString);
   }
-  
+
   private searchInScienceDirect(): void {
-    this._scienceDirect.Search(this.baseString);
+    this._scienceDirect.getResults(this.baseString);
   }
 
   private searchInACM(): void {
     if (this.isTitle)
-      this._acmdl.GetResults(this._form.baseString, "title");
+      this._acmdl.getResults(this._form.baseString, "title");
     if (this.isAbstract)
-      this._acmdl.GetResults(this._form.baseString, "abstract");
+      this._acmdl.getResults(this._form.baseString, "abstract");
     if (this.isKeyword)
-      this._acmdl.GetResults(this._form.baseString, "keyword");
+      this._acmdl.getResults(this._form.baseString, "keyword");
   }
 
   private searchInWiley(): void {

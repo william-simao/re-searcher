@@ -17,7 +17,7 @@ export class AcmdlService {
     private _util: UtilService
   ) { }
 
-  public GetResults(baseString: string, type: string): void {
+  public getResults(baseString: string, type: string): void {
     this.formatAcm(baseString);
     if (type === "title")
       this._sender.getResults(`https://dl.acm.org/results.cfm?query=${this.title}`, "ACM DL Title");
@@ -27,7 +27,7 @@ export class AcmdlService {
       this._sender.getResults(`https://dl.acm.org/results.cfm?query=${this.keyword}&Go.x=0&Go.y=0`, "ACM DL Keyword");
   }
 
-  public Search(baseString: string, type: string): void {
+  public search(baseString: string, type: string): void {
     this.formatAcm(baseString);
     if (type === "title")
       this._sender.sendRequest(`https://dl.acm.org/exportformats_search.cfm?query=${this.title}&filtered=&within=owners%2Eowner%3DHOSTED&dte=&bfr=&srt=%5Fscore&expformat=csv`, "ACM DL Title");

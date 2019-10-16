@@ -22,7 +22,16 @@ export class SenderService {
   }
 
   private readerResults(result, source): void {
-    this.paper.ACMResult(result, source);
+    if (source === "Springer Link") {
+      this.paper.SpringerResult(result);
+    }
+
+    if (source.startsWith("ACM DL"))
+      this.paper.ACMResult(result, source);
+
+    if (source === "Science Direct") {
+      this.paper.ScienceDirectResult(result);
+    }
   }
 
   public sendRequest(url: string, source: any): any {
