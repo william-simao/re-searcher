@@ -9,7 +9,7 @@
     <h2 class="example-h2">Sources</h2>
     <!-- <mat-checkbox [(ngModel)]="isIeee" (click)="search()">IEEEXplore</mat-checkbox><br /> -->
     <mat-checkbox [(ngModel)]="isAcm" (click)="search()">ACM DL</mat-checkbox><br />
-    <mat-checkbox [(ngModel)]="isSpringer" (click)="search()">Springer</mat-checkbox><br />
+    <mat-checkbox [(ngModel)]="isSpringer" (click)="search()" title="This library only supports aggregate searches with title, summary, and keywords.">Springer (*)</mat-checkbox><br />
     <mat-checkbox [(ngModel)]="isScienceDirect" (click)="search()" title="This library only supports aggregate searches with title, summary, and keywords.">Science Direct (*)</mat-checkbox><br />
     <mat-checkbox [(ngModel)]="isWiley" (click)="search()">Wiley Online Library</mat-checkbox><br />
     <!-- <mat-checkbox [(ngModel)]="isScienceDirect" (click)="search()">Science Direct</mat-checkbox> -->
@@ -19,6 +19,10 @@
 <br/>
 <button mat-flat-button color="primary" (click)="searchInSources()">SEARCH</button>
 <br/>
+<br/>
+<!-- <mat-chip-list class="mat-chip-list-stacked" aria-label="Color selection">
+    <mat-chip selected color="warn"><i>Your string is too generic. Because of this, not all papers can be recovered. See our string recommendation by clicking here</i></mat-chip>
+  </mat-chip-list> -->
 <br/>
 <div class="mat-elevation-z8">
   <table mat-table [dataSource]="dataSourceResult">

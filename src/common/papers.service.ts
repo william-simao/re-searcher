@@ -71,7 +71,7 @@ export class PapersService {
 
   public SpringerResult(result, url): void {
     var doc = this.convertResultToDOM(result);
-    this.result.push(new Result("Springer Link", "Title, Abstract, and Keywords", doc.getElementById("number-of-search-results-and-search-terms").innerText.split(" ")[0], url));
+    this.result.push(new Result("Springer Link", "Title, Abstract, and Keywords", doc.getElementById("number-of-search-results-and-search-terms").innerText.trim().split(" ")[0].trim(), url));
   }
 
   public ScienceDirectResult(result, url): void {
