@@ -8,6 +8,7 @@ import { MatPaginator } from '@angular/material';
 import { SpringerService } from 'src/libraries/springer.service';
 import { ScienceDirectService } from 'src/libraries/science-direct.service';
 import { WileyService } from 'src/libraries/wiley.service';
+import { ScopusService } from 'src/libraries/scopus.service';
 
 export interface StringBase {
   source: string;
@@ -43,7 +44,7 @@ export class HomeFormResultComponent implements OnInit {
   isScienceDirect = false;
   isSpringer = false;
   isWiley = false;
-  
+  isScopus = false;
 
   constructor(
     private _form: HomeFormComponent,
@@ -53,6 +54,7 @@ export class HomeFormResultComponent implements OnInit {
     private _scienceDirect: ScienceDirectService,
     private _acmdl: AcmdlService,
     private _wiley: WileyService,
+    private _scopus: ScopusService,
     public _papers: PapersService
   ) { this.differ = _differs; }
 
@@ -208,6 +210,9 @@ export class HomeFormResultComponent implements OnInit {
 
     if (this.isWiley)
       this.searchInWiley();
+
+    if (this.isScopus)
+      this.searchInScopus();
   }
 
   private searchInSpringer(): void {
@@ -232,4 +237,14 @@ export class HomeFormResultComponent implements OnInit {
       this._wiley.GetTitleResults(this._form.baseString);
   }
 
+  private searchInScopus(): void {
+    if (this.isTitle)
+      this._scopus.searcInTitle(this.baseString);
+    
+    if (this.isAbstract)
+      this._scopus.searcInAbstract(this.baseString);
+    
+    if (this.isKeyword)
+      this._scopus.searcInKeywords(this.baseString);
+  }
 }

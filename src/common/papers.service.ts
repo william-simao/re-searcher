@@ -79,6 +79,11 @@ export class PapersService {
     this.result.push(new Result("Science Direct", "Title, Abstract, and Keywords", doc.getElementsByClassName("search-body-results-text")[0].innerText.split(" ")[0], url));
   }
 
+  public ScopusResult(result, type, url): void {
+    var jsonResult = JSON.parse(result);
+    this.result.push(new Result("Scopus", type.split(" ")[1], jsonResult["search-results"]["opensearch:totalResults"], url));
+  }
+
   private convertResultToDOM(result): any {
     return new DOMParser().parseFromString(result, "text/html");
   }

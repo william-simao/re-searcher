@@ -57,6 +57,7 @@ import { routes } from '../app/app-routing/app-routing.module';
 import { HomeFormTypesComponent } from './pages/home/home-form-types/home-form-types.component';
 import { HttpClientModule } from '@angular/common/http';
 import { PaperService } from 'src/libraries/paper.service';
+import { HomeFormDataComponent } from './pages/home/home-form-data/home-form-data.component';
 
 @NgModule({
   declarations: [
@@ -70,7 +71,8 @@ import { PaperService } from 'src/libraries/paper.service';
     HomeFormResultComponent,
     AboutPageComponent,
     HelpPageComponent,
-    HomeFormTypesComponent
+    HomeFormTypesComponent,
+    HomeFormDataComponent
   ],
   imports: [
     HttpClientModule,

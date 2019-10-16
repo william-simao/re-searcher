@@ -32,6 +32,11 @@ export class SenderService {
     if (source === "Science Direct") {
       this.paper.ScienceDirectResult(result, url);
     }
+
+    if (source.startsWith("Scopus"))
+      this.paper.ScopusResult(result, source, url);
+
+      debugger;
   }
 
   public sendRequest(url: string, source: any): any {
