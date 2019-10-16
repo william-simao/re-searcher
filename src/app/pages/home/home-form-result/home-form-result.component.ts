@@ -100,6 +100,7 @@ export class HomeFormResultComponent implements OnInit {
         "source": result.source,
         "type": result.type,
         "total": result.total,
+        "url": result.url
       }
     }
     

@@ -16,7 +16,7 @@ export class PapersService {
     this.papers.push(paper);
   }
 
-  public SpringerReader(result) {
+  public SpringerReader(result, url) {
     let paperList = result.split("\n");
     /*for (let i = 1; i < paperList.length; i++) {
       var row = paperList[i].split(`","`);
@@ -24,10 +24,10 @@ export class PapersService {
       if (paper != null && paper != undefined)
         this.update(paper);
     }*/
-    this.result.push(new Result("Springer", "Title, Abstract, and Keyword", paperList.length - 1));
+    this.result.push(new Result("Springer", "Title, Abstract, and Keyword", paperList.length - 1, url));
   }
 
-  public ScienceDirectReader(result) {
+  public ScienceDirectReader(result, url) {
     var doc = new DOMParser().parseFromString(result, "text/html");
     var paperList = doc.getElementsByClassName("ResultItem col-xs-24 push-m");
     /*for(let i = 0; i < paperList.length; i++){
@@ -43,7 +43,7 @@ export class PapersService {
     }*/
 
     if (this.result.find(i => i.source == "Science Direct") == undefined) 
-      this.result.push(new Result("Science Direct", "Title, Abstract, and Keyword", paperList.length - 1));
+      this.result.push(new Result("Science Direct", "Title, Abstract, and Keyword", paperList.length - 1, url));
     else {
       for( var i = 0; i < this.result.length; i++){ 
         if ( this.result[i].source === "Science Direct") {
@@ -53,7 +53,7 @@ export class PapersService {
     }
   }
 
-  public ACMReader(result, type){
+  public ACMReader(result, type, url){
     let paperList = result.split("\n");
     /*for (let i = 1; i < paperList.length; i++) {
       var row = paperList[i].split(`","`);
@@ -61,22 +61,22 @@ export class PapersService {
       if (paper != null && paper != undefined)
         this.update(paper);
     }*/
-    this.result.push(new Result("ACM DL", type.split(" ")[2], paperList.length - 1));
+    this.result.push(new Result("ACM DL", type.split(" ")[2], paperList.length - 1, url));
   }
 
-  public ACMResult(result, type): void {
+  public ACMResult(result, type, url): void {
     var doc = this.convertResultToDOM(result);
-    this.result.push(new Result("ACM DL", type.split(" ")[2], doc.getElementById("searchtots").innerText.split(" ")[0]));
+    this.result.push(new Result("ACM DL", type.split(" ")[2], doc.getElementById("searchtots").innerText.split(" ")[0], url));
   }
 
-  public SpringerResult(result): void {
+  public SpringerResult(result, url): void {
     var doc = this.convertResultToDOM(result);
-    this.result.push(new Result("Springer Link", "Title, Abstract, and Keywords", doc.getElementById("number-of-search-results-and-search-terms").innerText.split(" ")[0]));
+    this.result.push(new Result("Springer Link", "Title, Abstract, and Keywords", doc.getElementById("number-of-search-results-and-search-terms").innerText.split(" ")[0], url));
   }
 
-  public ScienceDirectResult(result): void {
+  public ScienceDirectResult(result, url): void {
     var doc = this.convertResultToDOM(result);
-    this.result.push(new Result("Science Direct", "Title, Abstract, and Keywords", doc.getElementsByClassName("search-body-results-text")[0].innerText.split(" ")[0]));
+    this.result.push(new Result("Science Direct", "Title, Abstract, and Keywords", doc.getElementsByClassName("search-body-results-text")[0].innerText.split(" ")[0], url));
   }
 
   private convertResultToDOM(result): any {

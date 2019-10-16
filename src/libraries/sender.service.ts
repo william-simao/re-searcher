@@ -16,21 +16,21 @@ export class SenderService {
 		Http.onreadystatechange = (e) => {
       if (Http.readyState == 4 && Http.status == 200) {
         var result = Http.responseText;
-        this.readerResults(result, source);
+        this.readerResults(result, source, url);
       }
 		}
   }
 
-  private readerResults(result, source): void {
+  private readerResults(result, source, url): void {
     if (source === "Springer Link") {
-      this.paper.SpringerResult(result);
+      this.paper.SpringerResult(result, url);
     }
 
     if (source.startsWith("ACM DL"))
-      this.paper.ACMResult(result, source);
+      this.paper.ACMResult(result, source, url);
 
     if (source === "Science Direct") {
-      this.paper.ScienceDirectResult(result);
+      this.paper.ScienceDirectResult(result, url);
     }
   }
 
@@ -41,19 +41,19 @@ export class SenderService {
 		Http.onreadystatechange = (e) => {
       if (Http.readyState == 4 && Http.status == 200) {
         var result = Http.responseText;
-        this.reader(result, source);
+        this.reader(result, source, url);
       }
 		}
   }
 
-  private reader(result, source): void {
+  private reader(result, source, url): void {
     if (source === "Springer")
-      this.paper.SpringerReader(result);
+      this.paper.SpringerReader(result, url);
 
     if (source == "Science Direct")
-      this.paper.ScienceDirectReader(result);
+      this.paper.ScienceDirectReader(result, url);
 
     if (source.startsWith("ACM DL"))
-      this.paper.ACMReader(result, source);
+      this.paper.ACMReader(result, source, url);
   }
 }

@@ -10,7 +10,7 @@
     <!-- <mat-checkbox [(ngModel)]="isIeee" (click)="search()">IEEEXplore</mat-checkbox><br /> -->
     <mat-checkbox [(ngModel)]="isAcm" (click)="search()">ACM DL</mat-checkbox><br />
     <mat-checkbox [(ngModel)]="isSpringer" (click)="search()">Springer</mat-checkbox><br />
-    <mat-checkbox [(ngModel)]="isScienceDirect" (click)="search()">Science Direct</mat-checkbox><br />
+    <mat-checkbox [(ngModel)]="isScienceDirect" (click)="search()" title="This library only supports aggregate searches with title, summary, and keywords.">Science Direct (*)</mat-checkbox><br />
     <mat-checkbox [(ngModel)]="isWiley" (click)="search()">Wiley Online Library</mat-checkbox><br />
     <!-- <mat-checkbox [(ngModel)]="isScienceDirect" (click)="search()">Science Direct</mat-checkbox> -->
   </div>
@@ -37,7 +37,9 @@
         <h3>Type</h3>
       </th>
       <td mat-cell *matCellDef="let element; let i = index">
-        <b>{{element.type}}</b>
+       <a href="{{element.url}}" target="_blank">
+         <b>{{element.type}}</b>
+        </a>
       </td>
     </ng-container>
 
