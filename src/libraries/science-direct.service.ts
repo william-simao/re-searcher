@@ -5,26 +5,29 @@ import { SenderService } from './sender.service';
   providedIn: 'root'
 })
 export class ScienceDirectService {
-
+  private string = ``;
   constructor(private _sender: SenderService) { }
 
-  public Search(baseString: string): void {
-    let url = `https://www.sciencedirect.com/search/advanced?qs=${baseString}&show=100&sortBy=relevance`;
-    this._sender.sendRequest(url, "Science Direct");
+  public search(): void {
+    if (this.string != "") {
+      let url = `https://www.sciencedirect.com/search/advanced?qs=${this.string}&show=100&sortBy=relevance`;
+      this._sender.sendRequest(url, "Science Direct");
 
-    this.Researcher(baseString, 100);
-    this.Researcher(baseString, 200);
-    this.Researcher(baseString, 300);
-    this.Researcher(baseString, 400);
+      this.Researcher(100);
+      this.Researcher(200);
+      this.Researcher(300);
+      this.Researcher(400);
+    }
   }
 
-  private Researcher(baseString: string, offset): void {
+  private Researcher(offset): void {
     this.sleep(3);
-    let url = `https://www.sciencedirect.com/search/advanced?tak=${baseString}&show=100&sortBy=relevance&offset=${offset}`;
+    let url = `https://www.sciencedirect.com/search/advanced?tak=${this.string}&show=100&sortBy=relevance&offset=${offset}`;
     this._sender.sendRequest(url, "Science Direct");
   }
 
   public getResults(baseString: string): void {
+    this.string = baseString;
     let url = `https://www.sciencedirect.com/search/advanced?tak=${baseString}`;
     this._sender.getResults(url, "Science Direct")
   }

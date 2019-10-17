@@ -6,16 +6,19 @@ import { SenderService } from './sender.service';
   providedIn: 'root'
 })
 export class SpringerService {
-
+  public string = ``
   constructor(private _sender: SenderService) { }
 
   public getResults(baseString: string): void {    
+    this.string = baseString;
     let url = `https://link.springer.com/search?query=${baseString}`;
     this._sender.getResults(url, "Springer Link")
   }
 
-  public search(baseString: string): void {
-    let url = `https://link.springer.com/search/csv?query=${baseString}`;
-    this._sender.sendRequest(url, "Springer");
+  public search(): void {
+    if (this.string != "") {
+      let url = `https://link.springer.com/search/csv?query=${this.string}`;
+      this._sender.sendRequest(url, "Springer");
+    }
   }
 }

@@ -123,6 +123,7 @@ import { HomeFormDataComponent } from './pages/home/home-form-data/home-form-dat
   ],
   providers: [
     HomeFormComponent,
+    HomeFormResultComponent,
     CdkColumnDef,
     PaperService
   ],

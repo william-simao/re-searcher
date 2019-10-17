@@ -18,7 +18,7 @@ export class AcmdlService {
   ) { }
 
   public getResults(baseString: string, type: string): void {
-    this.formatAcm(baseString);
+    this.formatAcm(baseString, type);
     if (type === "title")
       this._sender.getResults(`https://dl.acm.org/results.cfm?query=${this.title}`, "ACM DL Title");
     if (type === "abstract")
@@ -27,20 +27,19 @@ export class AcmdlService {
       this._sender.getResults(`https://dl.acm.org/results.cfm?query=${this.keyword}&Go.x=0&Go.y=0`, "ACM DL Keyword");
   }
 
-  public search(baseString: string, type: string): void {
-    this.formatAcm(baseString);
-    if (type === "title")
+  public search(): void {
+    if (this.title !== "")
       this._sender.sendRequest(`https://dl.acm.org/exportformats_search.cfm?query=${this.title}&filtered=&within=owners%2Eowner%3DHOSTED&dte=&bfr=&srt=%5Fscore&expformat=csv`, "ACM DL Title");
-    if (type === "abstract")
+    if (this.abstract != "")
       this._sender.sendRequest(`https://dl.acm.org/exportformats_search.cfm?query=${this.abstract}&filtered=&within=owners%2Eowner%3DHOSTED&dte=&bfr=&srt=%5Fscore&expformat=csv`, "ACM DL Abstract");
-    if (type === "keyword")
+    if (this.keyword != "")
       this._sender.sendRequest(`https://dl.acm.org/exportformats_search.cfm?query=${this.keyword}&filtered=&within=owners%2Eowner%3DHOSTED&dte=&bfr=&srt=%5Fscore&expformat=csv`, "ACM DL Keyword");
   }
 
-  private formatAcm(baseString: string): void {
+  private formatAcm(baseString: string, type: string): void {
     let acmBase = this._util.removeBaseParenthesis(baseString);
     acmBase = this.addSignalAcm(acmBase);
-    this.addKeysAcm(acmBase);
+    this.addKeysAcm(acmBase, type);
   }
 
   private addSignalAcm(acmBase: string): string {
@@ -49,9 +48,12 @@ export class AcmdlService {
     return `(+${acmBase})`;
   }
 
-  private addKeysAcm(acmBase: string): void {
-    this.title = `acmdlTitle:(${acmBase})`;
-    this.abstract = `recordAbstract:(${acmBase})`;
-    this.keyword = `keywords.author.keyword:(${acmBase})`;
+  private addKeysAcm(acmBase: string, type: string): void {
+    if (type === "title")
+      this.title = `acmdlTitle:(${acmBase})`;
+    if (type === "abstract")
+      this.abstract = `recordAbstract:(${acmBase})`;
+    if (type === "keyword")
+      this.keyword = `keywords.author.keyword:(${acmBase})`;
   }
 }

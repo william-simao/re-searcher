@@ -4,7 +4,6 @@ import { HomeFormComponent } from '../home-form/home-form.component';
 import { IeeeService } from 'src/libraries/ieee.service';
 import { AcmdlService } from 'src/libraries/acmdl.service';
 import { PapersService } from 'src/common/papers.service';
-import { MatPaginator } from '@angular/material';
 import { SpringerService } from 'src/libraries/springer.service';
 import { ScienceDirectService } from 'src/libraries/science-direct.service';
 import { WileyService } from 'src/libraries/wiley.service';
@@ -208,9 +207,6 @@ export class HomeFormResultComponent implements OnInit {
     if (this.isAcm)
       this.searchInACM();    
 
-    if (this.isWiley)
-      this.searchInWiley();
-
     if (this.isScopus)
       this.searchInScopus();
   }
@@ -230,11 +226,6 @@ export class HomeFormResultComponent implements OnInit {
       this._acmdl.getResults(this._form.baseString, "abstract");
     if (this.isKeyword)
       this._acmdl.getResults(this._form.baseString, "keyword");
-  }
-
-  private searchInWiley(): void {
-    if (this.isTitle)
-      this._wiley.GetTitleResults(this._form.baseString);
   }
 
   private searchInScopus(): void {
