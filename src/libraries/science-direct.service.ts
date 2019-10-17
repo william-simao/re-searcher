@@ -20,17 +20,17 @@ export class ScienceDirectService {
 
   private Researcher(baseString: string, offset): void {
     this.sleep(3);
-    let url = `https://www.sciencedirect.com/search/advanced?qs=${baseString}&show=100&sortBy=relevance&offset=${offset}`;
+    let url = `https://www.sciencedirect.com/search/advanced?tak=${baseString}&show=100&sortBy=relevance&offset=${offset}`;
     this._sender.sendRequest(url, "Science Direct");
   }
 
   public getResults(baseString: string): void {
-    let url = `https://www.sciencedirect.com/search/advanced?qs=${baseString}`;
+    let url = `https://www.sciencedirect.com/search/advanced?tak=${baseString}`;
     this._sender.getResults(url, "Science Direct")
   }
 
   private sleep(seconds){
     var waitUntil = new Date().getTime() + seconds*500;
     while(new Date().getTime() < waitUntil) true;
-}
+  }
 }

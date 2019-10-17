@@ -29,8 +29,12 @@ export class Result {
   constructor(source, type, total, url) {
     this.source = source;
     this.type = type;
-    this.total = total;
+    this.total = Number(this.replaceAll(total, ",", ""));
     this.url = url;
+  }
+
+  public replaceAll(text: string, oldChar: string, newChar: string): string {
+    return text.split(oldChar).join(newChar);
   }
 }
 

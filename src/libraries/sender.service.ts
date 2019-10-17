@@ -35,8 +35,6 @@ export class SenderService {
 
     if (source.startsWith("Scopus"))
       this.paper.ScopusResult(result, source, url);
-
-      debugger;
   }
 
   public sendRequest(url: string, source: any): any {

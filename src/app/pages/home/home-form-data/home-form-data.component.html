@@ -1,4 +1,78 @@
 <section>
-    
-<div id="chartContainer" style="height: 300px; width: 100%;"></div>
+    <h3>1) Summary by Source</h3>
+    <table>
+            <tr>
+              <th><b>SOURCE</b></th>
+              <th class="number"><b>TOTAL</b></th>
+              <th class="number"><b>FREQUENCY (%)</b></th>
+            </tr>
+            <tr>
+              <td>ACM DL</td>
+              <td class="number">{{ sumSummarySource('ACM DL') }}</td>
+              <td class="number">{{ percentSummarySource('ACM DL') }}</td>
+            </tr>
+            <tr>
+              <td>Springer Link</td>
+              <td class="number">{{ sumSummarySource('Springer') }}</td>
+              <td class="number">{{ percentSummarySource('Springer') }}</td>
+            </tr>
+            <tr>
+              <td>Science Direct</td>
+              <td class="number">{{ sumSummarySource('Science Direct') }}</td>
+              <td class="number">{{ percentSummarySource('Science Direct') }}</td>
+            </tr>
+            <tr>
+              <td>Wiley Online Library</td>
+              <td class="number">-</td>
+              <td class="number">-</td>
+            </tr>
+            <tr>
+              <td>Scopus</td>
+              <td class="number">{{ sumSummarySource('Scopus') }}</td>
+              <td class="number">{{ percentSummarySource('Scopus') }}</td>
+            </tr>
+            <tr>
+              <td>TOTAL</td>
+              <td class="number">{{ getTotal() }}</td>
+              <td class="number">100%</td>
+            </tr>
+          </table>
 </section>
+
+<br/>
+<br/>
+<section>
+        <h3>2) Summary by Search Type</h3>
+        <table>
+                <tr>
+                  <th><b>TYPE</b></th>
+                  <th class="number"><b>TOTAL</b></th>
+                  <th class="number"><b>FREQUENCY (%)</b></th>
+                </tr>
+                <tr>
+                  <td>Title</td>
+                  <td class="number">{{ sumSummaryType('Title') }}</td>
+                  <td class="number">{{ percentSummaryType('Title') }}</td>
+                </tr>
+                <tr>
+                  <td>Abstract</td>
+                  <td class="number">{{ sumSummaryType('Abstract') }}</td>
+                  <td class="number">{{ percentSummaryType('Abstract') }}</td>
+                </tr>
+                <tr>
+                  <td>Keywords</td>
+                  <td class="number">{{ sumSummaryType('Keywords') }}</td>
+                  <td class="number">{{ percentSummaryType('Keywords') }}</td>
+                </tr>
+                <tr>
+                  <td>Title, Abstract, and Keywords</td>
+                  <td class="number">{{ sumSummaryType('Title, Abstract, and Keywords') }}</td>
+                  <td class="number">{{ percentSummaryType('Title, Abstract, and Keywords') }}</td>
+                </tr>
+                <tr>
+                  <td>TOTAL</td>
+                  <td class="number">{{ getTotal() }}</td>
+                  <td class="number">100%</td>
+                </tr>
+              </table>
+    </section>
