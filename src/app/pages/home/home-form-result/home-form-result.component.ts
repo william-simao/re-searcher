@@ -64,6 +64,9 @@ export class HomeFormResultComponent implements OnInit {
   public search(): void {
   }
 
+  public checkKey(key: string): boolean {
+    return localStorage.getItem(key) === null || localStorage.getItem(key) === "";
+  }
 
   public checkShowCell(i): boolean {
     if (this.isTitle && (i === 0 || i === 3))

@@ -58,6 +58,7 @@ import { HomeFormTypesComponent } from './pages/home/home-form-types/home-form-t
 import { HttpClientModule } from '@angular/common/http';
 import { PaperService } from 'src/libraries/paper.service';
 import { HomeFormDataComponent } from './pages/home/home-form-data/home-form-data.component';
+import { ConfigKeysComponent } from './pages/config/config-keys/config-keys.component';
 
 @NgModule({
   declarations: [
@@ -72,7 +73,8 @@ import { HomeFormDataComponent } from './pages/home/home-form-data/home-form-dat
     AboutPageComponent,
     HelpPageComponent,
     HomeFormTypesComponent,
-    HomeFormDataComponent
+    HomeFormDataComponent,
+    ConfigKeysComponent
   ],
   imports: [
     HttpClientModule,
