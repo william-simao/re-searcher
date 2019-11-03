@@ -22,7 +22,7 @@ export interface StringBase {
   styleUrls: ['./home-form-result.component.css']
 })
 export class HomeFormResultComponent implements OnInit {
-  displayedColumns: string[] = ['source', 'type', 'title', 'DOI', 'year'];  
+  displayedColumns: string[] = ['source', 'type', 'title', 'DOI', 'year'];
   displayedColumnsResult: string[] = ['source', 'type', 'total'];
 
   public dataSource;
@@ -71,13 +71,13 @@ export class HomeFormResultComponent implements OnInit {
   public checkShowCell(i): boolean {
     if (this.isTitle && (i === 0 || i === 3))
       return true;
-    
+
     if (this.isAbstract && (i === 1 || i === 4))
       return true;
 
     if (this.isKeyword && (i === 2 || i === 5))
       return true;
-    
+
     if (i === 6)
       return true;
     return false;
@@ -91,7 +91,7 @@ export class HomeFormResultComponent implements OnInit {
     }
 
     const changes2 = this.differ.find(this._papers.papers);
-    if (changes2){
+    if (changes2) {
       this.convertToData();
     }
   }
@@ -107,7 +107,7 @@ export class HomeFormResultComponent implements OnInit {
         "url": result.url
       }
     }
-    
+
 
     this.dataSourcePapers = [];
     for (let i = 0; i < this._papers.papers.length; i++) {
@@ -118,16 +118,16 @@ export class HomeFormResultComponent implements OnInit {
         "title": paperAux.title,
         "DOI": paperAux.DOI,
         "year": paperAux.year
-      }      
+      }
     }
   }
 
   private replaceAll(text: string, oldChar: string, newChar: string): string {
     return text.split(oldChar).join(newChar);
   }
-  
+
   private countEndParenthesis(text: string): number {
-    return text.split(')').length - 1;   
+    return text.split(')').length - 1;
   }
 
   private removeBaseParenthesis(): string {
@@ -166,19 +166,19 @@ export class HomeFormResultComponent implements OnInit {
     let abstract = this.utilFormatterKeysIeee(ieeeBase, '"Abstract"');
     let keyword = this.utilFormatterKeysIeee(ieeeBase, '"Index Terms"');
     let url = `https://ieeexplore.ieee.org/search/searchresult.jsp?action=search&matchBoolean=true&searchField=Search_All&queryText=(#query#)&newsearch=true`;
-    
+
     this.dataSource = [
       {
         'source': 'IEEE Xplore',
         'type': 'Title',
         'text': title,
         'url': url.replace('#query#', title)
-      },{
+      }, {
         'source': 'IEEE Xplore',
         'type': 'Abstract',
         'text': abstract,
         'url': url.replace('#query#', abstract)
-      },{
+      }, {
         'source': 'IEEE Xplore',
         'type': 'Keywords',
         'text': keyword,
@@ -203,12 +203,12 @@ export class HomeFormResultComponent implements OnInit {
     this._papers.result = [];
     if (this.isSpringer)
       this.searchInSpringer();
-    
+
     if (this.isScienceDirect)
       this.searchInScienceDirect();
-    
+
     if (this.isAcm)
-      this.searchInACM();    
+      this.searchInACM();
 
     if (this.isScopus)
       this.searchInScopus();
@@ -232,13 +232,17 @@ export class HomeFormResultComponent implements OnInit {
   }
 
   private searchInScopus(): void {
-    if (this.isTitle)
-      this._scopus.searcInTitle(this.baseString);
-    
-    if (this.isAbstract)
-      this._scopus.searcInAbstract(this.baseString);
-    
-    if (this.isKeyword)
-      this._scopus.searcInKeywords(this.baseString);
+    if (this.isTitle && this.isAbstract && this.isKeyword) {
+      this._scopus.searchAll(this.baseString);
+    } else {
+      if (this.isTitle)
+        this._scopus.searcInTitle(this.baseString);
+
+      if (this.isAbstract)
+        this._scopus.searcInAbstract(this.baseString);
+
+      if (this.isKeyword)
+        this._scopus.searcInKeywords(this.baseString);
+    }
   }
 }

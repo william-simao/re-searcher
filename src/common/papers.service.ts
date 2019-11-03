@@ -70,7 +70,8 @@ export class PapersService {
   public ScopusResult(result, type, url): void {
     var jsonResult = JSON.parse(result);
     this.ScopusReader(jsonResult, type);
-    this.result.push(new Result("Scopus", type.split(" ")[1], jsonResult["search-results"]["opensearch:totalResults"], url));
+    var nameType = type === "Scopus Title, Abstract and Keywords" ? type : type.split(" ")[1];
+    this.result.push(new Result("Scopus", nameType, jsonResult["search-results"]["opensearch:totalResults"], url));
   }
 
   private ScopusReader(jsonResult, type): void {

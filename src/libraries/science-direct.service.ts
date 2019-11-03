@@ -26,6 +26,10 @@ export class ScienceDirectService {
     this._sender.sendRequest(url, "Science Direct");
   }
 
+  private getKey(): string {
+    return localStorage.getItem("scienceDirect");
+  }
+
   public getResults(baseString: string): void {
     this.string = baseString;
     let url = `https://www.sciencedirect.com/search/advanced?tak=${baseString}`;
