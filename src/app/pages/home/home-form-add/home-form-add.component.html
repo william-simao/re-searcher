@@ -6,7 +6,28 @@
   <mat-divider></mat-divider>
 
   <br />
-  <form [formGroup]="form" class="full-width">
+  <form [formGroup]="form" class="full-width form">
+    <p>
+      <mat-form-field class="input-config">
+        <textarea formControlName="searchString" matInput placeholder="Enter with your string"></textarea>
+      </mat-form-field>
+    </p>
+    <div style="width: 300px;">
+      <mat-chip-list *ngIf="checkQuotationMark()" class="mat-chip-list-stacked" aria-label="Color selection">
+        <mat-chip selected color="warn" style="text-align: center;">
+          <i>Check the quotation mark (") used in your string</i>
+        </mat-chip>
+      </mat-chip-list>
+    </div>
+    <div style="width: 400px;">
+      <mat-chip-list *ngIf="checkParentheses()" class="mat-chip-list-stacked" aria-label="Color selection">
+        <mat-chip selected color="warn" style="text-align: center;">
+          <i>Check the amount of parentheses "(" or ")" used in your string</i>
+        </mat-chip>
+      </mat-chip-list>
+    </div>
+
+    <!--
     <mat-form-field>
       <mat-label>Select category</mat-label>
       <mat-select formControlName="category" required>
@@ -20,8 +41,9 @@
     <button mat-mini-fab color="primary" (click)="addNewTerm()" aria-placeholder="add button">
       <b>+</b>
     </button>
+    -->
   </form>
-
+  <!--
   <mat-divider></mat-divider>
   <div class="external-box">
     <h3>General</h3>
@@ -32,7 +54,7 @@
       </mat-card>
     </div>
   </div>
-  <br/>
+  <br />
   <mat-divider></mat-divider>
   <div class="external-box">
     <h3>Domain</h3>
@@ -44,3 +66,4 @@
     </div>
   </div>
 </mat-card>
+-->

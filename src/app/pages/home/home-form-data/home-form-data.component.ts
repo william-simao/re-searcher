@@ -6,13 +6,32 @@ import { ScienceDirectService } from 'src/libraries/science-direct.service';
 import { AcmdlService } from 'src/libraries/acmdl.service';
 import { UtilService } from 'src/common/util.service';
 
+import { Chart } from 'angular-highcharts';
+
 @Component({
   selector: 'app-home-form-data',
   templateUrl: './home-form-data.component.html',
   styleUrls: ['./home-form-data.component.css']
 })
 export class HomeFormDataComponent implements OnInit {
-
+  chart = new Chart({
+    chart: {
+      type: 'line'
+    },
+    title: {
+      text: 'Publications by year'
+    },
+    credits: {
+      enabled: false
+    },
+    series: [
+      {
+        name: 'Publications',
+        data: [1, 2, 3],
+        type: "bar"
+      }
+    ]
+  });
   constructor(
     public _papers: PapersService,
     public _result: HomeFormResultComponent,

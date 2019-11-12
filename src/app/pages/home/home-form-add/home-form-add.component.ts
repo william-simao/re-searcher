@@ -12,7 +12,8 @@ export class HomeFormAddComponent implements OnInit {
   
   public form: FormGroup = new FormGroup({
     term: new FormControl(''),
-    category: new FormControl('')
+    category: new FormControl(''),
+    searchString: new FormControl('')
   });
   public generals: Array<string> = new Array<string>();
   public domains: Array<string> = new Array<string>();
@@ -30,6 +31,21 @@ export class HomeFormAddComponent implements OnInit {
     this._form.updateTerms(this.generals, this.domains);
   }
 
+  public checkQuotationMark(): boolean {    
+    let occurrences = this.checkOccurrences(`"`);
+    return (occurrences % 2 !== 0);
+  }
+
+  public checkParentheses(): boolean {
+    let occurrencesOpen = this.checkOccurrences(`(`);
+    let occurrencesClose = this.checkOccurrences(`)`);
+    return (occurrencesClose !== occurrencesOpen);
+  }
+
+  private checkOccurrences(char): number {
+    let searchString = this.form.controls.searchString.value;
+    return searchString.split(char).length - 1;
+  }
   public addNewTerm(){
     let newTerm = this.form.controls.term.value;
     let newCategory = this.form.controls.category.value;

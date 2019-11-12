@@ -59,6 +59,7 @@ import { HttpClientModule } from '@angular/common/http';
 import { PaperService } from 'src/libraries/paper.service';
 import { HomeFormDataComponent } from './pages/home/home-form-data/home-form-data.component';
 import { ConfigKeysComponent } from './pages/config/config-keys/config-keys.component';
+import { ChartModule } from 'angular-highcharts';
 
 @NgModule({
   declarations: [
@@ -120,6 +121,7 @@ import { ConfigKeysComponent } from './pages/config/config-keys/config-keys.comp
     MatTreeModule,
     //SidebarModule.forRoot(),
     FormsModule,
+    ChartModule,
     ReactiveFormsModule,
     RouterModule.forRoot(routes)
   ],
