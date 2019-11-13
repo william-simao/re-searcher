@@ -1,17 +1,17 @@
 <section>
   <div class="searchIn">
     <h2 class="example-h2">Search in</h2>
-    <mat-checkbox [(ngModel)]="isTitle" (click)="search()">Title</mat-checkbox><br />
-    <mat-checkbox [(ngModel)]="isAbstract" (click)="search()">Abstract</mat-checkbox><br />
-    <mat-checkbox [(ngModel)]="isKeyword" (click)="search()">Keywords</mat-checkbox>
+    <mat-checkbox [(ngModel)]="isTitle">Title</mat-checkbox><br />
+    <mat-checkbox [(ngModel)]="isAbstract">Abstract</mat-checkbox><br />
+    <mat-checkbox [(ngModel)]="isKeyword">Keywords</mat-checkbox>
   </div>
   <div class="source">
     <h2 class="example-h2">Sources</h2>
-    <!-- <mat-checkbox [(ngModel)]="isIeee" (click)="search()">IEEEXplore</mat-checkbox><br /> -->
-    <mat-checkbox [(ngModel)]="isAcm" (click)="search()">ACM DL</mat-checkbox><br />
-    <mat-checkbox [(ngModel)]="isSpringer" (click)="search()" title="This library only supports aggregate searches with title, summary, and keywords.">Springer Link (*)</mat-checkbox><br />
-    <mat-checkbox [(ngModel)]="isScienceDirect" (click)="search()" [disabled]="checkKey('scienceDirect')" title="This library only supports aggregate searches with title, summary, and keywords.">Science Direct (*)</mat-checkbox><br />
-    <mat-checkbox [(ngModel)]="isScopus" (click)="search()" [disabled]="checkKey('scopus')">Scopus</mat-checkbox><br />
+    <!-- <mat-checkbox [(ngModel)]="isIeee">IEEEXplore</mat-checkbox><br /> -->
+    <mat-checkbox [(ngModel)]="isAcm">ACM DL</mat-checkbox><br />
+    <mat-checkbox [(ngModel)]="isSpringer" title="This library only supports aggregate searches with title, summary, and keywords.">Springer Link (*)</mat-checkbox><br />
+    <mat-checkbox [(ngModel)]="isScienceDirect" [disabled]="checkKey('scienceDirect')" title="This library only supports aggregate searches with title, summary, and keywords.">Science Direct (*)</mat-checkbox><br />
+    <mat-checkbox [(ngModel)]="isScopus" [disabled]="checkKey('scopus')">Scopus</mat-checkbox><br />
   </div>
 </section>
 <div class="clearfix"></div>

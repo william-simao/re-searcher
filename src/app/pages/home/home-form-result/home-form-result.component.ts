@@ -61,9 +61,6 @@ export class HomeFormResultComponent implements OnInit {
     this.dataSourcePapers = [];
   }
 
-  public search(): void {
-  }
-
   public checkKey(key: string): boolean {
     return localStorage.getItem(key) === null || localStorage.getItem(key) === "";
   }
@@ -84,14 +81,10 @@ export class HomeFormResultComponent implements OnInit {
   }
 
   ngDoCheck() {
-    const changes = this.differ.find(this._form.generalTerms);
-    if (changes) {
-      this.baseString = this._form.baseString;
-      this.formatIeee();
-    }
+    this.baseString = localStorage.getItem("searchString");
 
-    const changes2 = this.differ.find(this._papers.papers);
-    if (changes2) {
+    const changes = this.differ.find(this._papers.papers);
+    if (changes) {
       this.convertToData();
     }
   }
@@ -224,11 +217,11 @@ export class HomeFormResultComponent implements OnInit {
 
   private searchInACM(): void {
     if (this.isTitle)
-      this._acmdl.getResults(this._form.baseString, "title");
+      this._acmdl.getResults(this.baseString, "title");
     if (this.isAbstract)
-      this._acmdl.getResults(this._form.baseString, "abstract");
+      this._acmdl.getResults(this.baseString, "abstract");
     if (this.isKeyword)
-      this._acmdl.getResults(this._form.baseString, "keyword");
+      this._acmdl.getResults(this.baseString, "keyword");
   }
 
   private searchInScopus(): void {

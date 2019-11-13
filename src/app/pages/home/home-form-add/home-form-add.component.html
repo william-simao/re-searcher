@@ -1,7 +1,7 @@
 <br />
 <mat-card style="padding: 0!important; overflow: auto" class="mat-elevation-z4">
   <div class="mat-card-box">
-    <mat-card-title>Add your terms</mat-card-title>
+    <mat-card-title>Add your string</mat-card-title>
   </div>
   <mat-divider></mat-divider>
 
@@ -12,58 +12,21 @@
         <textarea formControlName="searchString" matInput placeholder="Enter with your string"></textarea>
       </mat-form-field>
     </p>
-    <div style="width: 300px;">
+    <div style="width: 300px; padding: 5px;">
       <mat-chip-list *ngIf="checkQuotationMark()" class="mat-chip-list-stacked" aria-label="Color selection">
         <mat-chip selected color="warn" style="text-align: center;">
           <i>Check the quotation mark (") used in your string</i>
         </mat-chip>
       </mat-chip-list>
     </div>
-    <div style="width: 400px;">
+    <br />
+    <div style="width: 400px; padding: 5px;">
       <mat-chip-list *ngIf="checkParentheses()" class="mat-chip-list-stacked" aria-label="Color selection">
         <mat-chip selected color="warn" style="text-align: center;">
           <i>Check the amount of parentheses "(" or ")" used in your string</i>
         </mat-chip>
       </mat-chip-list>
     </div>
-
-    <!--
-    <mat-form-field>
-      <mat-label>Select category</mat-label>
-      <mat-select formControlName="category" required>
-        <mat-option value="General">General</mat-option>
-        <mat-option value="Domains">Domain</mat-option>
-      </mat-select>
-    </mat-form-field>
-    <mat-form-field class="input-config" required>
-      <input matInput placeholder="Enter with the term and press '+' button" formControlName="term">
-    </mat-form-field>
-    <button mat-mini-fab color="primary" (click)="addNewTerm()" aria-placeholder="add button">
-      <b>+</b>
-    </button>
-    -->
+    <br />
   </form>
-  <!--
-  <mat-divider></mat-divider>
-  <div class="external-box">
-    <h3>General</h3>
-    <div *ngFor="let term of generals">
-      <mat-card class="terms-config">
-        <span>{{ term }}</span>
-        <mat-icon class="terms-config-icon" (click)="removeGeneralTerm(term)">delete</mat-icon>
-      </mat-card>
-    </div>
-  </div>
-  <br />
-  <mat-divider></mat-divider>
-  <div class="external-box">
-    <h3>Domain</h3>
-    <div *ngFor="let term of domains">
-      <mat-card class="terms-config">
-        <span>{{ term }}</span>
-        <mat-icon class="terms-config-icon" (click)="removeDomainTerm(term)">delete</mat-icon>
-      </mat-card>
-    </div>
-  </div>
 </mat-card>
--->

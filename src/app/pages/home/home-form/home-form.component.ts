@@ -15,8 +15,8 @@ export class HomeFormComponent implements OnInit {
   firstFormGroup: FormGroup;
   secondFormGroup: FormGroup;
 
-  public generalTerms: Array<string> = new Array<string>();
-  public domainTerms: Array<string> = new Array<string>();
+  //public generalTerms: Array<string> = new Array<string>();
+  //public domainTerms: Array<string> = new Array<string>();
   public baseString: string = '';
   public isSecondary: boolean = false;
 
@@ -34,11 +34,6 @@ export class HomeFormComponent implements OnInit {
     this.secondFormGroup = this._formBuilder.group({
       secondCtrl: ['', Validators.required]
     });
-  }
-
-  public updateTerms(general: Array<string>, domain: Array<string>): void {
-    this.generalTerms = general;
-    this.domainTerms = domain;
   }
 
   public updateBaseString(baseString: string): void {
