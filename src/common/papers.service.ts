@@ -20,7 +20,7 @@ export class PapersService {
     let paperList = result.split("\n");
     for (let i = 1; i < paperList.length; i++) {
       var row = paperList[i].split(`","`);
-      var paper = new Paper("Springer", "Title, Abstract, and Keywords", row[0], row[5], row[7]);
+      var paper = new Paper("Springer", "Title, Abstract, and Keywords", row[0], row[5], row[7], row[6], "?", "?", "?", `${row[1]} ${row[2]}`, "?", "?");
       if (paper != null && paper != undefined)
         this.update(paper);
     }
@@ -31,22 +31,79 @@ export class PapersService {
     var paperList = doc.getElementsByClassName("ResultItem col-xs-24 push-m");
     for(let i = 0; i < paperList.length; i++){
       var row = paperList[i];
-      let type =  (<HTMLElement>row.getElementsByClassName("article-type u-clr-grey8")[0]).innerText;
       let title = (<HTMLElement>row.getElementsByClassName("result-list-title-link u-font-serif text-s")[0]).innerText;
       let DOI = row.getAttribute("data-doi");
       let year = (<HTMLElement>row.getElementsByClassName("SubType hor")[0].children[2]).innerText;
       year = year.replace(",", "").substring(year.length - 6);
-      var paper = new Paper("Science Direct", "Title, Abstract, and Keywords", title, DOI, year);
+      var paper = new Paper("Science Direct", "Title, Abstract, and Keywords", 
+        title, 
+        DOI, 
+        this.getYear(row), 
+        this.getAuthors(row), 
+        this.getPages(row),
+        this.getNumPages(row),
+        "?",
+        this.getJournalName(row), 
+        "?",
+         "?");
+
       if (paper != null && paper != undefined)
         this.update(paper);
     }
   }
 
+  private getYear(row): string {
+    try {      
+      let year = row.getElementsByClassName("SubType hor")[0].children[2].innerText;
+      year = year.replace(",", "").substring(year.length - 6);
+      return year;
+    } catch (error) {
+      return "?";
+    }
+  }
+
+  private getAuthors(row): string {
+    try {
+      let obj = row.getElementsByClassName("Authors hor undefined")[0];
+      if (obj)
+        return obj.innerText;
+      else
+        return row.getElementsByClassName("Authors hor reduce-list")[0].innerText;
+    } catch (error) {
+      return "?"
+    }
+  }
+
+  private getPages(row): string {
+    try {
+      return row.getElementsByClassName("SubType hor")[0].innerText.split("Pages ")[1];      
+    } catch (error) {
+      return "?";
+    }
+  }
+
+  private getNumPages(row): string {
+    try {
+      let pages = row.getElementsByClassName("SubType hor")[0].innerText.split("Pages ")[1].split("-");
+      return (pages[1].replace(",", "") - pages[0]).toString();
+    } catch (error) {
+      return "?";
+    }
+  }
+
+  private getJournalName(row): string {
+    try {
+      return row.getElementsByClassName("subtype-srctitle-link")[0].innerText;
+    } catch (error) {
+      return "?";
+    }
+  }
+
   public ACMReader(result, type, url){
     let paperList = result.split("\n");
-    for (let i = 1; i < paperList.length; i++) {
+    for (let i = 1; i < paperList.length - 1; i++) {
       var row = paperList[i].split(`","`);
-      var paper = new Paper("ACM DL", type.split(" ")[2], row[6], row[11], row[18]);
+      var paper = new Paper("ACM DL", type.split(" ")[2], row[6], row[11], row[18], row[2], row[7], row[9], row[10], `${row[12]} - ${row[20]}`, row[21], row[24]);
       if (paper != null && paper != undefined)
         this.update(paper);
     }
@@ -64,7 +121,9 @@ export class PapersService {
 
   public ScienceDirectResult(result, url): void {
     var doc = this.convertResultToDOM(result);
-    this.result.push(new Result("Science Direct", "Title, Abstract, and Keywords", doc.getElementsByClassName("search-body-results-text")[0].innerText.split(" ")[0], url));
+    var total = doc.getElementsByClassName("search-body-results-text")[0].innerText.split(" ")[0];
+    localStorage.setItem("scienceDirectResults", total);
+    this.result.push(new Result("Science Direct", "Title, Abstract, and Keywords", total, url));
   }
 
   public ScopusResult(result, type, url): void {
@@ -78,8 +137,8 @@ export class PapersService {
     for (let i = 0; i < jsonResult["search-results"].entry.length; i++) {
       const json = jsonResult["search-results"].entry[i];
       var date = new Date(json["prism:coverDate"]).getFullYear();
-      var paper = new Paper("Scopus", type, json["dc:title"], json["prism:doi"], date);
-      this.update(paper);
+      //var paper = new Paper("Scopus", type, json["dc:title"], json["prism:doi"], date);
+      //this.update(paper);
     }
   }
 

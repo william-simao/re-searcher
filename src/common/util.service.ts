@@ -17,4 +17,11 @@ export class UtilService {
   public replaceAll(text: string, oldChar: string, newChar: string): string {
     return text.split(oldChar).join(newChar);
   }
+
+  public removeChars(text: string): string {
+    var newText = "";
+    newText = text.split("#").join("");
+    newText = newText.split("&").join("e");
+    return newText;
+  }
 }

@@ -1,4 +1,8 @@
 import { Component, OnInit } from '@angular/core';
+
+import { Chart } from 'angular-highcharts';
+
+import { Paper } from 'src/libraries/paper.service';
 import { PapersService } from 'src/common/papers.service';
 import { HomeFormResultComponent } from '../home-form-result/home-form-result.component';
 import { SpringerService } from 'src/libraries/springer.service';
@@ -6,32 +10,34 @@ import { ScienceDirectService } from 'src/libraries/science-direct.service';
 import { AcmdlService } from 'src/libraries/acmdl.service';
 import { UtilService } from 'src/common/util.service';
 
-import { Chart } from 'angular-highcharts';
-
 @Component({
   selector: 'app-home-form-data',
   templateUrl: './home-form-data.component.html',
   styleUrls: ['./home-form-data.component.css']
 })
 export class HomeFormDataComponent implements OnInit {
-  chart = new Chart({
-    chart: {
-      type: 'line'
-    },
-    title: {
-      text: 'Publications by year'
-    },
-    credits: {
-      enabled: false
-    },
-    series: [
-      {
-        name: 'Publications',
-        data: [1, 2, 3],
-        type: "bar"
-      }
-    ]
-  });
+//https://dl.acm.org/tab_abstract.cfm?id=3266250
+  // private total: number = 0;
+
+  // public yearChart;
+  // chart = new Chart({
+  //   chart: {
+  //     type: 'line'
+  //   },
+  //   title: {
+  //     text: 'Publications by year'
+  //   },
+  //   credits: {
+  //     enabled: false
+  //   },
+  //   series: [
+  //     {
+  //       name: 'Publications',
+  //       data: [1, 2, 3],
+  //       type: "bar"
+  //     }
+  //   ]
+  // });
   constructor(
     public _papers: PapersService,
     public _result: HomeFormResultComponent,
@@ -42,6 +48,10 @@ export class HomeFormDataComponent implements OnInit {
   ) { }
 
   ngOnInit() {
+  }
+
+  ngDoCheck() { 
+    
   }
 
   public update(): void {
@@ -107,16 +117,24 @@ export class HomeFormDataComponent implements OnInit {
   }
 
   public download(): void {
-    var csv = ["SOURCE;TYPE;DOI;YEAR;TITLE"];
+    var csv = ["SOURCE;TYPE;DOI;YEAR;TITLE;AUTHORS;PAGES;NUM_PAGES;KEYWORDS;JOURNAL_EVENT_NAME;JOURNAL_EVENT_ACRONYM;LOCALIZATION"];
     this._papers.papers.forEach(paper => {
       var title = this._util.replaceAll(paper.title, ";", "");
-      title = this._util.replaceAll(title, "#", "");
-      var year = paper.year;
-      var DOI = paper.DOI;
-      var source = paper.source;
-      var type = paper.type;
+      title = this._util.removeChars(title);
+    
+      let year = this._util.removeChars(paper.year);
+      let DOI = this._util.removeChars(paper.DOI);
+      let source = this._util.removeChars(paper.source);
+      let type = this._util.removeChars(paper.type);
+      let authors = this._util.removeChars(paper.authors);
+      let pages = this._util.removeChars(paper.pages);
+      let numPages = this._util.removeChars(paper.numPages);
+      let keywords = this._util.removeChars(paper.keywords);
+      let journalEventName = this._util.removeChars(paper.journalEventName);
+      let journalEventAcronym = this._util.removeChars(paper.journalEventAcronym);
+      let localization = this._util.removeChars(paper.localization);
 
-      var row = `\n${source};${type};${DOI};${year};${title}`;
+      var row = `\n${source};${type};${DOI};${year};${title};${authors};${pages};${numPages};${keywords};${journalEventName};${journalEventAcronym};${localization}`;
       csv.push(row);
     });
     

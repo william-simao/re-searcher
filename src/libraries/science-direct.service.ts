@@ -6,17 +6,16 @@ import { SenderService } from './sender.service';
 })
 export class ScienceDirectService {
   private string = ``;
+  private totalPages = 0;
   constructor(private _sender: SenderService) { }
 
   public search(): void {
     if (this.string != "") {
-      let url = `https://www.sciencedirect.com/search/advanced?qs=${this.string}&show=100&sortBy=relevance`;
-      this._sender.sendRequest(url, "Science Direct");
-
-      this.Researcher(100);
-      this.Researcher(200);
-      this.Researcher(300);
-      this.Researcher(400);
+      debugger;
+      let total = new Number(localStorage.getItem("scienceDirectResults"));
+      for (let i = 0; i < total; i = i + 100) {
+        this.Researcher(i);
+      }
     }
   }
 
@@ -32,7 +31,7 @@ export class ScienceDirectService {
 
   public getResults(baseString: string): void {
     this.string = baseString;
-    let url = `https://www.sciencedirect.com/search/advanced?tak=${baseString}`;
+    let url = `https://www.sciencedirect.com/search/advanced?tak=${baseString}&show=100&sortBy=relevance`;
     this._sender.getResults(url, "Science Direct")
   }
 

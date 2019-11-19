@@ -10,13 +10,27 @@ export class Paper {
   title: string;
   DOI: string;
   year: string;
+  authors: string;
+  pages: string;
+  numPages: string;
+  keywords: string;
+  journalEventName: string;
+  journalEventAcronym: string;
+  localization: string;
 
-  constructor(source, type, title, doi, year){
+  constructor(source, type, title, doi, year, authors, pages, numPages, keywords, journalEventName, journalEventAcronym, localization){
     this.source = source;
     this.type = type ? type.replace(`"`, "") : "";
     this.title = title ? title.replace(`"`, "") : "";
     this.DOI = doi;
     this.year = year;
+    this.authors = authors ? authors.replace(";", "") : "";
+    this.pages = pages ? pages.replace(";", "") : "";
+    this.numPages = numPages ? numPages.replace(";", "") : "";
+    this.keywords = keywords ? keywords.replace(";", "") : "";
+    this.journalEventName = journalEventName ? journalEventName.replace(";", "") : "";
+    this.journalEventAcronym = journalEventAcronym ? journalEventAcronym.replace(";", "") : "";
+    this.localization = localization ? localization.replace(";", "") : "";
   }
 }
 
