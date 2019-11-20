@@ -9,6 +9,7 @@ import { SpringerService } from 'src/libraries/springer.service';
 import { ScienceDirectService } from 'src/libraries/science-direct.service';
 import { AcmdlService } from 'src/libraries/acmdl.service';
 import { UtilService } from 'src/common/util.service';
+import { ScopusService } from 'src/libraries/scopus.service';
 
 @Component({
   selector: 'app-home-form-data',
@@ -44,6 +45,7 @@ export class HomeFormDataComponent implements OnInit {
     private _springer: SpringerService,
     private _scienceDirect: ScienceDirectService,
     private _acmdl: AcmdlService,
+    private _scopus: ScopusService,
     private _util: UtilService
   ) { }
 
@@ -62,6 +64,7 @@ export class HomeFormDataComponent implements OnInit {
     this._scienceDirect.search();
     this._springer.search();
     this._acmdl.search();
+    this._scopus.searchAllData();
   }
 
   public sumSummarySource(source: string): number {

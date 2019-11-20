@@ -128,17 +128,36 @@ export class PapersService {
 
   public ScopusResult(result, type, url): void {
     var jsonResult = JSON.parse(result);
-    this.ScopusReader(jsonResult, type);
     var nameType = type === "Scopus Title, Abstract and Keywords" ? type : type.split(" ")[1];
     this.result.push(new Result("Scopus", nameType, jsonResult["search-results"]["opensearch:totalResults"], url));
   }
 
-  private ScopusReader(jsonResult, type): void {
+  public ScopusReader(jsonResult, type): void {
+    var jsonResult = JSON.parse(jsonResult);
     for (let i = 0; i < jsonResult["search-results"].entry.length; i++) {
       const json = jsonResult["search-results"].entry[i];
       var date = new Date(json["prism:coverDate"]).getFullYear();
-      //var paper = new Paper("Scopus", type, json["dc:title"], json["prism:doi"], date);
-      //this.update(paper);
+      var paper = new Paper("Scopus", 
+        type, 
+        json["dc:title"], 
+        json["prism:doi"], 
+        date,
+        json["dc:creator"],
+        json["prism:pageRange"],
+        this.getNumPagesScopus(json["prism:pageRange"]),
+        "?",
+        json["prism:publicationName"],
+        "?",
+        "?");
+      this.update(paper);
+    }
+  }
+
+  private getNumPagesScopus(pages): string {
+    try {
+      return (pages[1] - pages[0]).toString();
+    } catch (error) {
+      return "?";
     }
   }
 

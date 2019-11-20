@@ -11,7 +11,6 @@ export class ScienceDirectService {
 
   public search(): void {
     if (this.string != "") {
-      debugger;
       let total = new Number(localStorage.getItem("scienceDirectResults"));
       for (let i = 0; i < total; i = i + 100) {
         this.Researcher(i);

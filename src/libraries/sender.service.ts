@@ -35,6 +35,17 @@ export class SenderService {
 
     if (source.startsWith("Scopus"))
       this.paper.ScopusResult(result, source, url);
+    
+  }
+  
+  private scopusAux(result, url, source): void {
+    let json = JSON.parse(result);
+    let length = json["search-results"]["link"]["length"];
+    let nextUrl = json["search-results"]["link"][length - 2]["@href"];
+    this.sleep(3);
+
+    if (json["search-results"]["entry"].length === 25)
+      this.sendRequest(nextUrl, source);
   }
 
   public sendRequest(url: string, source: any): any {
@@ -58,5 +69,15 @@ export class SenderService {
 
     if (source.startsWith("ACM DL"))
       this.paper.ACMReader(result, source, url);
+
+    if (source.startsWith("Scopus")) {
+      this.paper.ScopusReader(result, source);
+      this.scopusAux(result, url, source);
+    }
+  }
+
+  private sleep(seconds){
+    var waitUntil = new Date().getTime() + seconds*500;
+    while(new Date().getTime() < waitUntil) true;
   }
 }

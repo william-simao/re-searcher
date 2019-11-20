@@ -20,8 +20,12 @@ export class UtilService {
 
   public removeChars(text: string): string {
     var newText = "";
-    newText = text.split("#").join("");
-    newText = newText.split("&").join("e");
+    try {     
+      newText = text.split("#").join("");
+      newText = newText.split("&").join("e"); 
+    } catch (error) {
+      
+    }
     return newText;
   }
 }
