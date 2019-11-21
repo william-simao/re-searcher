@@ -1,6 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 
 import { Chart } from 'angular-highcharts';
+import { Options } from 'highcharts';
 
 import { Paper } from 'src/libraries/paper.service';
 import { PapersService } from 'src/common/papers.service';
@@ -17,28 +18,11 @@ import { ScopusService } from 'src/libraries/scopus.service';
   styleUrls: ['./home-form-data.component.css']
 })
 export class HomeFormDataComponent implements OnInit {
-//https://dl.acm.org/tab_abstract.cfm?id=3266250
-  // private total: number = 0;
+  chart: Chart;
+  options: Options;
 
-  // public yearChart;
-  // chart = new Chart({
-  //   chart: {
-  //     type: 'line'
-  //   },
-  //   title: {
-  //     text: 'Publications by year'
-  //   },
-  //   credits: {
-  //     enabled: false
-  //   },
-  //   series: [
-  //     {
-  //       name: 'Publications',
-  //       data: [1, 2, 3],
-  //       type: "bar"
-  //     }
-  //   ]
-  // });
+  length: number = 0;
+
   constructor(
     public _papers: PapersService,
     public _result: HomeFormResultComponent,
@@ -53,7 +37,42 @@ export class HomeFormDataComponent implements OnInit {
   }
 
   ngDoCheck() { 
+    if (this._papers.papers.length != this.length) {
+      console.log(`updating length ${this.length} to ${this._papers.papers.length}`);
+      this.length = this._papers.papers.length;
+      this.updateYearChart();
+    }
+  }
+
+  private updateYearChart(): void {
     
+    let years = this._util.GetYearsFromPapers(this._papers.papers);
+    let data = this._util.GetOccurrencesYear(years, this._papers.papers);
+    console.log(years);
+    console.log(data);
+
+    this.options = {
+      chart: {
+        type: 'bar'
+      },
+      title: {
+        text: 'Linechart'
+      },
+      credits: {
+        enabled: false
+      },
+      series: [{
+        type: 'bar',
+        name: 'Year',
+        data: data
+      }],
+      xAxis: [{
+        categories: years
+      }]
+    };
+    let chart = new Chart(this.options);
+    this.chart = chart;
+
   }
 
   public update(): void {

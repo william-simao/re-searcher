@@ -28,4 +28,21 @@ export class UtilService {
     }
     return newText;
   }
+
+  public GetYearsFromPapers(papers): any {
+    let years = [];
+    papers.forEach(paper => {
+      if (years.indexOf(paper.year))
+        years.push(paper.year);
+    });
+    return years.sort();
+  }
+
+  public GetOccurrencesYear(years, papers): any {
+    let data = [];
+    years.forEach(year => {
+      data.push(papers.filter(paper => paper.year === year).length);
+    });
+    return data;
+  }
 }
