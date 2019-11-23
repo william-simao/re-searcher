@@ -32,16 +32,16 @@ export class UtilService {
   public GetYearsFromPapers(papers): any {
     let years = [];
     papers.forEach(paper => {
-      if (years.indexOf(paper.year))
-        years.push(paper.year);
+      if (years.find(f => f == paper.year) == undefined)
+        years.push(new Number(paper.year));
     });
     return years.sort();
   }
 
   public GetOccurrencesYear(years, papers): any {
     let data = [];
-    years.forEach(year => {
-      data.push(papers.filter(paper => paper.year === year).length);
+    years.forEach(year => {      
+      data.push(papers.filter(paper => paper.year == year.toString()).length);
     });
     return data;
   }

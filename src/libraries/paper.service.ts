@@ -7,6 +7,7 @@ import { Injectable } from '@angular/core';
 export class Paper {
   source: string;
   type: string;
+  paperType: string;
   title: string;
   DOI: string;
   year: string;
@@ -18,9 +19,10 @@ export class Paper {
   journalEventAcronym: string;
   localization: string;
 
-  constructor(source, type, title, doi, year, authors, pages, numPages, keywords, journalEventName, journalEventAcronym, localization){
+  constructor(source, type, paperType, title, doi, year, authors, pages, numPages, keywords, journalEventName, journalEventAcronym, localization){
     this.source = source;
     this.type = type ? type.replace(`"`, "") : "";
+    this.paperType = paperType ? paperType.replace(`"`, "") : "";;
     this.title = title ? title.replace(`"`, "") : "";
     this.DOI = doi;
     this.year = year;

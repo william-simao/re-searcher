@@ -35,11 +35,11 @@ export class HomeFormResultComponent implements OnInit {
   public ieee: object = {};
 
   isTitle = true;
-  isAbstract = false;
-  isKeyword = false;
+  isAbstract = true;
+  isKeyword = true;
 
   isIeee = true;
-  isAcm = false;
+  isAcm = true;
   isScienceDirect = false;
   isSpringer = false;
   isWiley = false;

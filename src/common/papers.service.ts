@@ -20,7 +20,7 @@ export class PapersService {
     let paperList = result.split("\n");
     for (let i = 1; i < paperList.length; i++) {
       var row = paperList[i].split(`","`);
-      var paper = new Paper("Springer", "Title, Abstract, and Keywords", row[0], row[5], row[7], row[6], "?", "?", "?", `${row[1]} ${row[2]}`, "?", "?");
+      var paper = new Paper("Springer", "Title, Abstract, and Keywords", row[9], row[0], row[5], row[7], row[6], "?", "?", "?", `${row[1]} ${row[2]}`, "?", "?");
       if (paper != null && paper != undefined)
         this.update(paper);
     }
@@ -37,6 +37,7 @@ export class PapersService {
       year = year.replace(",", "").substring(year.length - 6);
       var paper = new Paper("Science Direct", "Title, Abstract, and Keywords", 
         title, 
+        this.getPaperType(row),
         DOI, 
         this.getYear(row), 
         this.getAuthors(row), 
@@ -49,6 +50,14 @@ export class PapersService {
 
       if (paper != null && paper != undefined)
         this.update(paper);
+    }
+  }
+
+  private getPaperType(row): string {
+    try {
+      return row.getElementsByClassName("article-type u-clr-grey8").innerText;
+    } catch (error) {
+      return "?";
     }
   }
 
@@ -103,7 +112,7 @@ export class PapersService {
     let paperList = result.split("\n");
     for (let i = 1; i < paperList.length - 1; i++) {
       var row = paperList[i].split(`","`);
-      var paper = new Paper("ACM DL", type.split(" ")[2], row[6], row[11], row[18], row[2], row[7], row[9], row[10], `${row[12]} - ${row[20]}`, row[21], row[24]);
+      var paper = new Paper("ACM DL", type.split(" ")[2], row[0], row[6], row[11], row[18], row[2], row[7], row[9], row[10], `${row[12]} - ${row[20]}`, row[21], row[24]);
       if (paper != null && paper != undefined)
         this.update(paper);
     }
@@ -139,6 +148,7 @@ export class PapersService {
       var date = new Date(json["prism:coverDate"]).getFullYear();
       var paper = new Paper("Scopus", 
         type, 
+        json["subtypeDescription"],
         json["dc:title"], 
         json["prism:doi"], 
         date,

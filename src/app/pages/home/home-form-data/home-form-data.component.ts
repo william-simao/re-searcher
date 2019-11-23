@@ -53,19 +53,29 @@ export class HomeFormDataComponent implements OnInit {
 
     this.options = {
       chart: {
-        type: 'bar'
+        type: 'column',
+
       },
       title: {
-        text: 'Linechart'
+        text: 'Publications by Year'
       },
       credits: {
         enabled: false
       },
       series: [{
-        type: 'bar',
+        type: 'column',
         name: 'Year',
         data: data
       }],
+      plotOptions: {
+        series: {
+            borderWidth: 0,
+            dataLabels: {
+                enabled: true,
+                format: '{point.y:.1f}%'
+            }
+        }
+      },
       xAxis: [{
         categories: years
       }]
