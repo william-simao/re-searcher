@@ -130,9 +130,14 @@ export class PapersService {
 
   public ScienceDirectResult(result, url): void {
     var doc = this.convertResultToDOM(result);
-    var total = doc.getElementsByClassName("search-body-results-text")[0].innerText.split(" ")[0];
-    localStorage.setItem("scienceDirectResults", total);
-    this.result.push(new Result("Science Direct", "Title, Abstract, and Keywords", total, url));
+    try {
+      var total = doc.getElementsByClassName("search-body-results-text")[0].innerText.split(" ")[0];
+      localStorage.setItem("scienceDirectResults", total);
+      this.result.push(new Result("Science Direct", "Title, Abstract, and Keywords", total, url));
+    } catch (error) {
+      localStorage.setItem("scienceDirectResults", "0");
+      this.result.push(new Result("Science Direct", "Title, Abstract, and Keywords", "0", url));
+    }
   }
 
   public ScopusResult(result, type, url): void {

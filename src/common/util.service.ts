@@ -41,7 +41,28 @@ export class UtilService {
   public GetOccurrencesYear(years, papers): any {
     let data = [];
     years.forEach(year => {      
-      data.push(papers.filter(paper => paper.year == year.toString()).length);
+      let total = papers.filter(paper => paper.year == year.toString()).length;
+      let percentage = total / papers.length;
+      data.push({'name': year, 'y': total, 'percentage': percentage});
+    });
+    return data;
+  }
+
+  public GetPaperType(papers): any {
+    let types = [];
+    papers.forEach(paper => {
+      if (types.find(f => f == paper.paperType.toLocaleLowerCase()) == undefined)
+        types.push(paper.paperType.toLocaleLowerCase());
+    });
+    return types.sort();
+  }
+
+  public GetOcurrencesPaperType(types, papers): any {
+    let data = [];
+    types.forEach(type => {
+      let total = papers.filter(paper => paper.paperType.toLocaleLowerCase() == type).length;
+      let percentage = total / papers.length;
+      data.push({'name': type, 'y': total, 'percentage': percentage});
     });
     return data;
   }

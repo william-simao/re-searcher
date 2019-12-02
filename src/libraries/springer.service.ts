@@ -11,13 +11,13 @@ export class SpringerService {
 
   public getResults(baseString: string): void {    
     this.string = baseString;
-    let url = `https://link.springer.com/search?query=${baseString}`;
+    let url = `https://link.springer.com/search?dc.title=${baseString}`;
     this._sender.getResults(url, "Springer Link")
   }
 
   public search(): void {
     if (this.string != "") {
-      let url = `https://link.springer.com/search/csv?query=${this.string}`;
+      let url = `https://link.springer.com/search/csv?dc.title=${this.string}`;
       this._sender.sendRequest(url, "Springer");
     }
   }

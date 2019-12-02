@@ -20,6 +20,13 @@ export class HomeFormAddComponent implements OnInit {
   ngOnInit() {
   }
 
+  ngDoCheck() {
+    var isInvalid = this.checkQuotationMark() || this.checkParentheses();
+    localStorage.setItem("searchString", this.form.controls.searchString.value);
+    localStorage.setItem("isInvalidSearchString", `${isInvalid}`);
+  }
+
+
   public checkQuotationMark(): boolean {    
     let occurrences = this.checkOccurrences(`"`);
     return (occurrences % 2 !== 0);
@@ -34,11 +41,5 @@ export class HomeFormAddComponent implements OnInit {
   private checkOccurrences(char): number {
     let searchString = this.form.controls.searchString.value;
     return searchString.split(char).length - 1;
-  }
-
-  ngDoCheck() {
-    var isInvalid = this.checkQuotationMark() || this.checkParentheses();
-    localStorage.setItem("searchString", this.form.controls.searchString.value);
-    localStorage.setItem("isInvalidSearchString", `${isInvalid}`);
   }
 }

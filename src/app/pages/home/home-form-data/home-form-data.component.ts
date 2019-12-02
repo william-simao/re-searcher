@@ -21,6 +21,9 @@ export class HomeFormDataComponent implements OnInit {
   chart: Chart;
   options: Options;
 
+  chartPaperType: Chart;
+  optionsPaperType: Options;
+
   length: number = 0;
 
   constructor(
@@ -40,16 +43,18 @@ export class HomeFormDataComponent implements OnInit {
     if (this._papers.papers.length != this.length) {
       console.log(`updating length ${this.length} to ${this._papers.papers.length}`);
       this.length = this._papers.papers.length;
-      this.updateYearChart();
+      this.updateCharts();
     }
   }
 
-  private updateYearChart(): void {
-    
+  private updateCharts(): void {
+    this.updateYearChart();
+    this.updatePaperTypeChart();
+  }
+
+  private updateYearChart(): void {    
     let years = this._util.GetYearsFromPapers(this._papers.papers);
     let data = this._util.GetOccurrencesYear(years, this._papers.papers);
-    console.log(years);
-    console.log(data);
 
     this.options = {
       chart: {
@@ -82,7 +87,44 @@ export class HomeFormDataComponent implements OnInit {
     };
     let chart = new Chart(this.options);
     this.chart = chart;
+  }
 
+  private updatePaperTypeChart(): void {
+    let types = this._util.GetPaperType(this._papers.papers);
+    let data = this._util.GetOcurrencesPaperType(types, this._papers.papers);
+    this.optionsPaperType = {
+      chart : {
+        plotBorderWidth: null,
+        plotShadow: false
+      },
+      title : {
+        text: 'Publications by Types'   
+      },
+      tooltip : {
+          pointFormat: '{series.name}: <b>{point.percentage:.1f}%</b>'
+      },
+      plotOptions : {
+          pie: {
+            allowPointSelect: true,
+            cursor: 'pointer',
+            dataLabels: {
+                enabled: true,
+                format: '<b>{point.name}%</b>: {point.percentage:.1f} %',
+                style: {
+                  color: 'black'
+                }
+            }
+          }
+      },
+      series : [{
+          type: 'pie',
+          name: 'Browser share',
+          data: data
+      }]
+    };
+    console.log(data);
+    let chart = new Chart(this.optionsPaperType);
+    this.chartPaperType = chart;
   }
 
   public update(): void {
